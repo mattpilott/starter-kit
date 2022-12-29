@@ -1,0 +1,29 @@
+@use 'sass:math' as *;
+@use 'sass-mq/mq' as * with (
+	$breakpoints: (
+		mobile: 640px,
+		tablet: 1024px,
+		desktop: 1280px,
+		wide: 1600px
+	)
+);
+
+@function clampy($min, $max) {
+	// strip unit for the max value for calculation
+	$strip: div($max, $max * 0 + 1);
+	// calculate the clamp
+	$view: div($strip * 16, 1600) * 100vw; //16 = 1rem; 1600 = vw
+	// return non-shorthand clamp code for better browser support
+	@return min(max(#{$min}, #{$view}), #{$max});
+}
+
+%wrap {
+	margin: 0 auto;
+	padding: 0 2.25rem;
+
+	@include mq($from: tablet) {
+		max-width: 92.5rem;
+		padding: 0 1.25rem;
+		width: 92.5vw;
+	}
+}
