@@ -7,7 +7,11 @@ const prependData = readFileSync(new URL('src/library/prepend.scss', import.meta
 /** @type {import('@sveltejs/kit').Config} */
 export default {
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		alias: {
+			$components: './src/components',
+			$library: './src/library'
+		}
 	},
 	preprocess: preprocess.scss({ renderSync: true, prependData })
 }
