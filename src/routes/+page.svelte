@@ -1,7 +1,5 @@
 <script>
 	import Button from '$components/Button.svelte'
-
-	/** @type {import('./$types').PageData} */
 </script>
 
 <h1>Welcome to SvelteKit</h1>

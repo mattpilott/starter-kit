@@ -1,5 +1,4 @@
 <script>
-	/** @type {string} */
 	export let href
 </script>
 
