@@ -1,5 +1,5 @@
 <script>
-	// export let data
+	import '../app.scss'
 </script>
 
 <slot />
