@@ -21,8 +21,8 @@
 			</dl>
 		</div>
 	{/if}
-	<Button invisible on:click={() => ($prefs.cookie = false)}>Opt-out</Button>
-	<Button invisible on:click={() => (details = !details)}>Details</Button>
+	<Button on:click={() => ($prefs.cookie = false)}>Opt-out</Button>
+	<Button on:click={() => (details = !details)}>Details</Button>
 	<div />
 	<Button on:click={() => ($prefs.cookie = true)}>Accept</Button>
 </div>
