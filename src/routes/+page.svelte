@@ -1,5 +1,5 @@
 <script>
-	import Button from '$components/Button.svelte'
+	import Button from '$components/Button'
 </script>
 
 <h1>Welcome to SvelteKit</h1>

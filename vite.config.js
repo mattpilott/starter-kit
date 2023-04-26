@@ -9,5 +9,6 @@ export default defineConfig({
 	define: {
 		'import.meta.env.name': JSON.stringify(name),
 		'import.meta.env.version': JSON.stringify(version)
-	}
+	},
+	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] }
 })

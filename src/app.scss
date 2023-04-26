@@ -1,3 +1,60 @@
 @use '@neuekit/reboot';
 @use 'library/prepend' as *;
 @use 'sass-mq/mq' as *;
+
+:root {
+	/* Colors */
+	--c-black: hsl(230 50% 4%);
+
+	/* Radius */
+	--r-x: 1000px;
+	--r-24: 24px;
+	--r-20: 20px;
+	--r-14: 14px;
+	--r-10: 10px;
+	--r-6: 6px;
+
+	/* Sizes */
+	--s-wrap: 105rem;
+
+	/* Typography */
+	--f-family: system-ui, sans-serif;
+	--f-super: #{clampy(4rem, 10rem)} / 1.2 var(--f-family);
+	--f-display: #{clampy(2.5rem, 6rem)} / 1.2 var(--f-family);
+	--f-h1: #{clampy(2.5rem, 5rem)} / 1.2 var(--f-family);
+	--f-h2: #{clampy(1.5rem, 4rem)} / 1.2 var(--f-family);
+	--f-h3: #{clampy(1.25rem, 2.25rem)} / 1.3 var(--f-family);
+	--f-h4: #{clampy(1.25rem, 2rem)} / 1.4 var(--f-family);
+	--f-h5: #{clampy(1.125rem, 1.75rem)} / 1.3 var(--f-family);
+	--f-h6: #{clampy(0.875rem, 1.125rem)} / 1.4 var(--f-family);
+	--f-body: #{clampy(1rem, 1.25rem)} / 1.3 var(--f-family);
+	--f-excerpt: #{clampy(0.875rem, 1rem)} / 1.4 var(--f-family);
+	--f-caption: 0.875rem / 1.4 var(--f-family);
+	--f-label: 0.75rem / 1.4 var(--f-family);
+	--f-space: -0.02em;
+}
+
+html {
+	-webkit-font-smoothing: antialiased;
+	scroll-behavior: smooth;
+}
+
+body {
+	letter-spacing: 0;
+}
+
+button {
+	letter-spacing: inherit;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+hr {
+	background-color: var(--c-black);
+	border: none;
+	height: 0.5px;
+	width: 100%;
+}
