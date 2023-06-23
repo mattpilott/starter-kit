@@ -6,10 +6,10 @@
 	let details = false
 </script>
 
-<div class="cookie" in:fly|local={{ y: 50 }} out:fly|local={{ y: 50 }}>
+<div class="cookie" in:fly={{ y: 50 }} out:fly={{ y: 50 }}>
 	<div class="title">This site uses cookies to measure and improve your experience.</div>
 	{#if details}
-		<div class="details" transition:slide|local>
+		<div class="details" transition:slide>
 			We use cookies to improve your experience.<br />"Essential" cookies are needed for the site to function.
 			<dl>
 				<dt>Essential</dt>
