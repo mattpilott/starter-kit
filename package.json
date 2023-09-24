@@ -14,6 +14,7 @@
     "@neuekit/utils": "^2.4.2",
     "@sveltejs/adapter-vercel": "^3.0.3",
     "@sveltejs/kit": "^1.25.0",
+    "@vitejs/plugin-basic-ssl": "^1.0.1",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.30",
     "prettier": "^3.0.3",

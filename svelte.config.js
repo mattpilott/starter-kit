@@ -21,5 +21,6 @@ export default {
 			postcss: { plugins: autoprefixer() }
 		}),
 		vitePreprocess()
-	]
+	],
+	vitePlugin: { inspector: true }
 }
