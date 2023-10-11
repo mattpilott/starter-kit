@@ -1,31 +1,29 @@
 <script>
-	import { page } from '$app/stores'
+	import { afterNavigate } from '$app/navigation'
 	import { onMount } from 'svelte'
 
 	export let id
 
+	function gtag(..._args) {
+		window.dataLayer.push(arguments)
+	}
+
 	onMount(() => {
-		if (id) {
-			const googleAnalytics = document.createElement('script')
-			googleAnalytics.src = `https://www.googletagmanager.com/gtag/js?id=${id}`
+		if (!id) return
+		window.dataLayer = window.dataLayer || []
 
-			document.body.append(googleAnalytics)
-			window.dataLayer = window.dataLayer || []
-			window.gtag = function () {
-				window.dataLayer.push(arguments)
-			}
-
-			gtag('js', new Date())
-			gtag('config', id)
-		}
+		gtag('js', new Date())
+		gtag('config', id)
 	})
 
-	$: {
-		if (typeof gtag !== 'undefined' && id) {
-			gtag('config', id, {
-				page_title: document.title,
-				page_path: $page.url.pathname
-			})
-		}
-	}
+	afterNavigate(({ to }) => {
+		gtag('config', id, {
+			page_title: document.title,
+			page_path: to.url.pathname
+		})
+	})
 </script>
+
+<svelte:head>
+	<script async src="https://www.googletagmanager.com/gtag/js?id={id}"></script>
+</svelte:head>
