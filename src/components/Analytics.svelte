@@ -11,8 +11,7 @@
 
 			document.body.append(googleAnalytics)
 			window.dataLayer = window.dataLayer || []
-
-			function gtag() {
+			window.gtag = function () {
 				window.dataLayer.push(arguments)
 			}
 
