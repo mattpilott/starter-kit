@@ -7,6 +7,7 @@
 		wide: 1440px
 	)
 );
+@forward 'sass-mq/mq';
 
 @function clampy($min, $max) {
 	// strip unit for the max value for calculation
