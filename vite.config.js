@@ -14,9 +14,7 @@ export default defineConfig({
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
 	css: {
 		preprocessorOptions: {
-			scss: {
-				additionalData: `@use '$library/prepend' as *;`
-			}
+			scss: { additionalData: `@use '$library/prepend' as *;` }
 		}
 	},
 	build: { cssMinify: 'lightningcss' }
