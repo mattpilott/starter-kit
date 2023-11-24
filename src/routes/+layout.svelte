@@ -1,5 +1,5 @@
 <script>
-	import '../app.scss'
+	import '../app.css'
 	import { prefs } from '$library/stores'
 	import { dev } from '$app/environment'
 	import Analytics from '$components/Analytics'

@@ -27,7 +27,7 @@
 	<Button on:click={() => ($prefs.cookie = true)}>Accept</Button>
 </div>
 
-<style lang="scss">
+<style>
 	.cookie {
 		background-color: white;
 		border-radius: var(--r-14);
@@ -41,9 +41,9 @@
 		position: fixed;
 		z-index: 1;
 
-		@include mq($from: tablet) {
+		/* @include mq($from: tablet) {
 			inset: auto auto 1rem 1rem;
-		}
+		} */
 	}
 
 	.title {

@@ -1,6 +1,6 @@
 {
 	"name": "starter-kit",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -19,8 +19,6 @@
 		"lightningcss": "^1.22.1",
 		"prettier": "^3.0.3",
 		"prettier-plugin-svelte": "^3.0.3",
-		"sass": "^1.69.5",
-		"sass-mq": "^6.0.0",
 		"svelte": "^4.2.2",
 		"vite": "^5.0.2"
 	},

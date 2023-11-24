@@ -33,7 +33,7 @@
 	</div>
 {/if}
 
-<style lang="scss">
+<style>
 	.progress {
 		background-color: var(--c-black);
 		height: 0.125rem;
