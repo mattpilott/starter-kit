@@ -14,16 +14,17 @@ export const size = {
 	Declaration: {
 		custom: {
 			size(property) {
+				let value = { type: 'length-percentage' }
 				if (property.value[0].type === 'length') {
-					let value = {
-						type: 'length-percentage',
-						value: { type: 'dimension', value: property.value[0].value }
-					}
-					return [
-						{ property: 'width', value },
-						{ property: 'height', value }
-					]
+					value.value = { type: 'dimension', value: property.value[0].value }
 				}
+				if (property.value[0].type === 'token') {
+					value.value = { type: 'percentage', value: property.value[0].value.value }
+				}
+				return [
+					{ property: 'width', value },
+					{ property: 'height', value }
+				]
 			}
 		}
 	}
