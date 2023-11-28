@@ -1,12 +1,5 @@
 @import '../node_modules/@neuekit/reboot/reboot.css';
 
-@breakpoints {
-	mobile: 640px;
-	tablet: 1024px;
-	laptop: 1280px;
-	desktop: 1440px;
-}
-
 :root {
 	/* Colors */
 	--c-black: hsl(230 50% 4%);
@@ -46,6 +39,10 @@ html {
 
 body {
 	letter-spacing: 0;
+
+	@media (--from-mobile) and (--until-tablet) {
+		background-color: thistle;
+	}
 }
 
 button {

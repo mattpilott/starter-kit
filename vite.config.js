@@ -12,14 +12,16 @@ export default defineConfig({
 	css: {
 		transformer: 'lightningcss',
 		lightningcss: {
-			customAtRules: {
-				breakpoints: {
-					prelude: null,
-					body: 'declaration-list'
-				}
-			},
-			drafts: { customMedia: true },
-			visitor: composeVisitors([breakpoints, fluid(1600, 16), size])
+			visitor: composeVisitors([
+				breakpoints({
+					mobile: 640,
+					tablet: 1024,
+					laptop: 1280,
+					desktop: 1440
+				}),
+				fluid(1600, 16),
+				size
+			])
 		}
 	},
 	define: {

@@ -15,7 +15,6 @@
 		"@sveltejs/adapter-vercel": "^3.0.3",
 		"@sveltejs/kit": "^1.27.1",
 		"@vitejs/plugin-basic-ssl": "^1.0.1",
-		"autoprefixer": "^10.4.16",
 		"lightningcss": "^1.22.1",
 		"prettier": "^3.0.3",
 		"prettier-plugin-svelte": "^3.0.3",
