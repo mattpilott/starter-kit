@@ -9,6 +9,5 @@
 	"tabWidth": 3,
 	"arrowParens": "avoid",
 	"semi": false,
-	"svelteSortOrder": "options-scripts-markup-styles",
 	"svelteBracketNewLine": true
 }

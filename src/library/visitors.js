@@ -38,6 +38,8 @@ export const breakpoints = breakpoints => ({
 			const conds = value ? [{ value }] : conditions
 			const queries = []
 
+			if (!JSON.stringify(conds).includes('--')) return media
+
 			conds.forEach(({ value: { name } }) => {
 				const [till, device] = name.split('--').pop().split('-')
 				const minmax = till === 'from' ? 'min' : 'max'
