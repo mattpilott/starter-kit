@@ -11,10 +11,5 @@
 <style>
 	h1 {
 		font: 600 var(--f-h1);
-		size: 10px;
-
-		@media (--from-mobile) and (--until-tablet) {
-			color: blue;
-		}
 	}
 </style>

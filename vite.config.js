@@ -4,6 +4,7 @@ import { readFileSync } from 'fs'
 import { composeVisitors } from 'lightningcss'
 import { fluid, size, breakpoints } from './src/library/visitors'
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import { niceDate } from '@neuekit/utils'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
 
@@ -26,7 +27,8 @@ export default defineConfig({
 	},
 	define: {
 		'import.meta.env.name': JSON.stringify(name),
-		'import.meta.env.version': JSON.stringify(version)
+		'import.meta.env.version': JSON.stringify(version),
+		'import.meta.env.build': JSON.stringify(niceDate('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
 	},
 	plugins: [sveltekit(), basicSsl()],
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] }

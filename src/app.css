@@ -39,10 +39,6 @@ html {
 
 body {
 	letter-spacing: 0;
-
-	@media (--from-mobile) and (--until-tablet) {
-		background-color: thistle;
-	}
 }
 
 button {
