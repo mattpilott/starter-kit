@@ -1,5 +1,4 @@
-import adapter from '@sveltejs/adapter-vercel'
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
+import adapter from '@sveltejs/adapter-cloudflare'
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -9,7 +8,5 @@ export default {
 			$components: './src/components',
 			$library: './src/library'
 		}
-	},
-	preprocess: [vitePreprocess()],
-	vitePlugin: { inspector: true }
+	}
 }

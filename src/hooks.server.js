@@ -4,9 +4,9 @@ import { env } from '$env/dynamic/private'
 /** @type {import('@sveltejs/kit').HandleServerError} */
 export function handleError({ error }) {
 	return {
-		message: env.VERCEL_ENV !== 'production' ? error.message : 'Whoa there!',
+		message: env.ENVIRONMENT !== 'production' ? error.message : 'Whoa there!',
 		code: error?.code ?? 'UNKNOWN',
-		env: env.VERCEL_ENV
+		env: env.ENVIRONMENT
 	}
 }
 
