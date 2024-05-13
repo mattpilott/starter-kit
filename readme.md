@@ -4,3 +4,7 @@
 	size: 10px; /* this instead of height + width */
 }
 ```
+
+```svelte
+<Overlay mobile="/mobile.jpg@393" desktop="/desktop.jpg@1920" />
+```
