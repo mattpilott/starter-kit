@@ -29,7 +29,7 @@
 
 {#if showLoadingBar}
 	<div class="progress">
-		<div class="bar" style="width: {$progress * 100}%" />
+		<div class="bar" style="width: {$progress * 100}%"></div>
 	</div>
 {/if}
 

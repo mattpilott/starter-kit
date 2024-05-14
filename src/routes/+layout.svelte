@@ -1,6 +1,6 @@
 <script>
 	import '../app.css'
-	import Loader from '$components/Loader'
+	import Loader from '$components/Loader.svelte'
 </script>
 
 <svelte:head>
