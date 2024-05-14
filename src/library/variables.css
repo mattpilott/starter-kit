@@ -1,0 +1,31 @@
+:root {
+	/* Colors */
+	--c-black: hsl(230 50% 4%);
+
+	/* Radius */
+	--r-x: 1000px;
+	--r-24: 24px;
+	--r-20: 20px;
+	--r-14: 14px;
+	--r-10: 10px;
+	--r-6: 6px;
+
+	/* Sizes */
+	--s-wrap: 105rem;
+
+	/* Typography */
+	--f-family: system-ui;
+	--f-super: fluid(4rem, 10rem) / 1.2 var(--f-family);
+	--f-display: fluid(2.5rem, 6rem) / 1.2 var(--f-family);
+	--f-h1: fluid(2.5rem, 5rem) / 1.2 var(--f-family);
+	--f-h2: fluid(1.5rem, 4rem) / 1.2 var(--f-family);
+	--f-h3: fluid(1.25rem, 2.25rem) / 1.3 var(--f-family);
+	--f-h4: fluid(1.25rem, 2rem) / 1.4 var(--f-family);
+	--f-h5: fluid(1.125rem, 1.75rem) / 1.3 var(--f-family);
+	--f-h6: fluid(0.875rem, 1.125rem) / 1.4 var(--f-family);
+	--f-body: fluid(1rem, 1.25rem) / 1.3 var(--f-family);
+	--f-excerpt: fluid(0.875rem, 1rem) / 1.4 var(--f-family);
+	--f-caption: 0.875rem / 1.4 var(--f-family);
+	--f-label: 0.75rem / 1.4 var(--f-family);
+	--f-space: -0.02em;
+}
