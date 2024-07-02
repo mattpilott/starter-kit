@@ -16,12 +16,27 @@
 
 	$: browser && (document.documentElement.dataset.viewport = `${innerWidth} x ${innerHeight}`)
 
-	function keydown({ code, shiftKey }) {
-		const key = code.replace('Digit', '')
-		if (shiftKey && isFinite(key)) {
-			$overlay.shift = `-${key}0px`
-		} else if (isFinite(key)) {
-			$overlay.opacity = '0.' + key
+	let lastKeyPress = null
+	let lastKeyPressTime = 0
+
+	function keydown({ code, shiftKey, ctrlKey }) {
+		const now = Date.now()
+
+		if (shiftKey && (code === 'ArrowLeft' || code === 'ArrowRight')) {
+			const delta = code === 'ArrowLeft' ? 1 : -1
+			const multiplier = ctrlKey ? 1 : 10
+			$overlay.shift = (parseInt($overlay.shift) || 0) + delta * multiplier + 'px'
+		} else {
+			const key = code.replace('Digit', '')
+			if (isFinite(key)) {
+				if (key === '0') {
+					$overlay.opacity = lastKeyPress === '0' && now - lastKeyPressTime < 500 ? '0' : '1'
+				} else {
+					$overlay.opacity = '0.' + key
+				}
+				lastKeyPress = key
+				lastKeyPressTime = now
+			}
 		}
 	}
 </script>
@@ -51,7 +66,7 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 100;
+		z-index: 1000;
 	}
 
 	.img {
@@ -65,6 +80,7 @@
 		transform: translateX(-50%);
 		width: var(--mobile, 393px);
 	}
+
 	@media (min-width: 640px) {
 		.img {
 			width: var(--desktop, 1920px);
