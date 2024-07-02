@@ -1,4 +1,14 @@
 <script>
+	// This component allows a design to be overlaid on the page
+	// This helps you to achieve a pixel perfect design implementation
+	// It accepts 2 params for setting the desktop and mobile image paths
+	// There are desktop and mobile css variables that can be used to set the design width
+	// The --desktop and --mobile vars default to 1920 and 393 respectively
+	// To show/hide the overlay press 1 - 9 on the keyboard. 0 = 100%, 00 = 0% opacity
+	// You can shift the overlay up or down too; hold shift and press the left or right arrows
+	// Additiionally for a smaller shift up or down hold ctrl alongside shift
+	// Finally you can reset the overlay shift with shift + both the left & right arrows
+
 	import { browser } from '$app/environment'
 	import { storable } from '@neuekit/utils'
 
@@ -18,14 +28,23 @@
 
 	let lastKeyPress = null
 	let lastKeyPressTime = 0
+	let arrowKeys = new Set()
 
 	function keydown({ code, shiftKey, ctrlKey }) {
 		const now = Date.now()
 
 		if (shiftKey && (code === 'ArrowLeft' || code === 'ArrowRight')) {
-			const delta = code === 'ArrowLeft' ? 1 : -1
-			const multiplier = ctrlKey ? 1 : 10
-			$overlay.shift = (parseInt($overlay.shift) || 0) + delta * multiplier + 'px'
+			arrowKeys.add(code)
+
+			if (arrowKeys.has('ArrowLeft') && arrowKeys.has('ArrowRight')) {
+				$overlay.shift = '0px'
+				arrowKeys.clear()
+			} else {
+				const delta = code === 'ArrowLeft' ? 1 : -1
+				const multiplier = ctrlKey ? 1 : 10
+
+				$overlay.shift = (parseInt($overlay.shift) || 0) + delta * multiplier + 'px'
+			}
 		} else {
 			const key = code.replace('Digit', '')
 			if (isFinite(key)) {
@@ -39,9 +58,13 @@
 			}
 		}
 	}
+
+	function keyup({ code }) {
+		arrowKeys.delete(code)
+	}
 </script>
 
-<svelte:window on:keydown={keydown} bind:innerHeight bind:innerWidth />
+<svelte:window on:keydown={keydown} on:keyup={keyup} bind:innerHeight bind:innerWidth />
 
 {#if desktop && $overlay.opacity !== '0.0'}
 	<picture class="overlay" style="--mobile:{msize}px; --desktop:{dsize}px">
