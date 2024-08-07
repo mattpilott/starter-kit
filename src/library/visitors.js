@@ -1,11 +1,22 @@
-export const fluid = (size = 1600, root = 16) => ({
+export const fluid = ({ vmin = 0, vmax = 1600, root = 16 } = {}) => ({
 	Function: {
-		fluid({ arguments: [miny, _, maxy] }) {
-			const min = miny.value.value + miny.value.unit
-			const max = maxy.value.value + maxy.value.unit
-			const view = ((maxy.value.value * root) / size) * 100 + 'vw'
+		fluid({ arguments: [{ value: miny }, _, { value: maxy }] }) {
+			const toPx = (value, unit) => (unit === 'rem' ? value * root : value)
 
-			return { raw: `min(max(${min}, ${view}), ${max})` }
+			const minyInPx = toPx(miny.value, miny.unit)
+			const maxyInPx = toPx(maxy.value, maxy.unit)
+
+			const min = `${miny.value}${miny.unit}`
+			const max = `${maxy.value}${maxy.unit}`
+
+			const rem = minyInPx / root
+
+			const XX = vmin / 100
+			const YY = (100 * (maxyInPx - minyInPx)) / (vmax - vmin)
+
+			const scalar = `${rem.toFixed(4)}rem + ((1vw - ${XX.toFixed(1)}px) * ${YY.toFixed(4)})`
+
+			return { raw: `clamp(${min}, ${scalar}, ${max});` }
 		}
 	}
 })

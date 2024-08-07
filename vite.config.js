@@ -20,7 +20,7 @@ export default defineConfig({
 					laptop: 1280,
 					desktop: 1440
 				}),
-				fluid(1600, 16),
+				fluid({ vmax: 1600 }),
 				size
 			])
 		}
