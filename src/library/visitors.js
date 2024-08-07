@@ -24,17 +24,24 @@ export const fluid = ({ vmin = 0, vmax = 1600, root = 16 } = {}) => ({
 export const size = {
 	Declaration: {
 		custom: {
-			size(property) {
-				let value = { type: 'length-percentage' }
-				if (property.value[0].type === 'length') {
-					value.value = { type: 'dimension', value: property.value[0].value }
+			size({ value }) {
+				const parseValue = ({ type, value, unit }) => {
+					const obj = { type: 'length-percentage' }
+					if (type === 'length') {
+						return { ...obj, value: { type: 'dimension', value, unit } }
+					}
+					if (type === 'token') {
+						return { ...obj, value: { type: 'percentage', value: value.value } }
+					}
+					throw new Error(`Unsupported value type: ${type}`)
 				}
-				if (property.value[0].type === 'token') {
-					value.value = { type: 'percentage', value: property.value[0].value.value }
-				}
+
+				const height = parseValue(value[0])
+				const width = value[2] ? parseValue(value[2]) : height
+
 				return [
-					{ property: 'width', value },
-					{ property: 'height', value }
+					{ property: 'height', value: height },
+					{ property: 'width', value: width }
 				]
 			}
 		}
