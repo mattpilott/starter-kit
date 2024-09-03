@@ -10,7 +10,7 @@
 	// Finally you can reset the overlay shift with shift + both the left & right arrows
 
 	import { browser } from '$app/environment'
-	import { storable } from '@neuekit/utils'
+	import { storable } from 'kitto/svelte'
 
 	export let mobile = '/mobile.jpg'
 	export let desktop = '/desktop.jpg'
@@ -47,6 +47,7 @@
 			}
 		} else {
 			const key = code.replace('Digit', '')
+
 			if (isFinite(key)) {
 				if (key === '0') {
 					$overlay.opacity = lastKeyPress === '0' && now - lastKeyPressTime < 500 ? '0' : '1'

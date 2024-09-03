@@ -23,7 +23,7 @@
 	{/if}
 	<Button on:click={() => ($prefs.cookie = false)}>Opt-out</Button>
 	<Button on:click={() => (details = !details)}>Details</Button>
-	<div />
+	<div></div>
 	<Button on:click={() => ($prefs.cookie = true)}>Accept</Button>
 </div>
 

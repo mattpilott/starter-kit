@@ -11,5 +11,9 @@
 <style>
 	h1 {
 		font: 600 var(--f-h1);
+
+		@media (--from-mobile) and (--until-tablet) {
+			color: red;
+		}
 	}
 </style>

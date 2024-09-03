@@ -4,7 +4,7 @@
 
 	export let id
 
-	function gtag(..._args) {
+	function gtag() {
 		window.dataLayer.push(arguments)
 	}
 
@@ -18,8 +18,10 @@
 
 	afterNavigate(({ to }) => {
 		gtag('config', id, {
+			/* eslint-disable camelcase */
 			page_title: document.title,
 			page_path: to.url.pathname
+			/* eslint-enable camelcase */
 		})
 	})
 </script>
