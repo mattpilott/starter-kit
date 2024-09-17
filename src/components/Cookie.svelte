@@ -1,6 +1,6 @@
 <script>
 	import { prefs } from '$library/stores'
-	import Button from '$components/Button'
+	import Button from '$components/Button.svelte'
 	import { slide, fly } from 'svelte/transition'
 
 	let details = false
