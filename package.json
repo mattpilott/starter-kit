@@ -13,22 +13,22 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-cloudflare": "^4.7.2",
-		"@sveltejs/kit": "^2.5.27",
+		"@sveltejs/kit": "^2.5.28",
 		"@sveltejs/vite-plugin-svelte": "^3.1.2",
 		"@types/eslint": "^9.6.1",
 		"@vitejs/plugin-basic-ssl": "^1.1.0",
-		"eslint": "^9.10.0",
+		"eslint": "^9.11.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.44.0",
 		"globals": "^15.9.0",
-		"kitto": "^1.0.0-beta.6",
+		"kitto": "^1.0.0-beta.7",
 		"lightningcss": "^1.27.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
 		"svelte": "^4.2.19",
 		"svelte-check": "^4.0.2",
 		"typescript": "^5.6.2",
-		"vite": "^5.4.6"
+		"vite": "^5.4.7"
 	},
 	"type": "module"
 }
