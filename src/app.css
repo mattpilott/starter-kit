@@ -1,6 +1,10 @@
 @import 'kitto/unify';
 @import '$library/variables.css';
 
+@view-transition {
+	navigation: auto;
+}
+
 html {
 	-webkit-font-smoothing: antialiased;
 	scroll-behavior: smooth;
