@@ -85,7 +85,7 @@
 		display: block;
 		height: auto;
 		max-width: 100%;
-		overflow: hidden;
+		overflow: clip;
 		pointer-events: none;
 		position: absolute;
 		top: 0;
