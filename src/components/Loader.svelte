@@ -3,7 +3,7 @@
 	import { tweened } from 'svelte/motion'
 	import { cubicOut } from 'svelte/easing'
 
-	let showLoadingBar = false
+	let showLoadingBar = $state(false)
 
 	const progress = tweened(0, {
 		duration: 3500, // The time it takes to move between values

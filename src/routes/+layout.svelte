@@ -1,6 +1,13 @@
-<script>
+<script lang="ts">
 	import '../app.css'
 	import Loader from '$components/Loader.svelte'
+	import type { Snippet } from 'svelte'
+
+	interface Props {
+		children?: Snippet
+	}
+
+	let { children }: Props = $props()
 </script>
 
 <svelte:head>
@@ -10,4 +17,4 @@
 
 <Loader />
 
-<slot />
+{@render children?.()}

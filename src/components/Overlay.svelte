@@ -9,11 +9,14 @@
 	// Additiionally for a smaller shift up or down hold ctrl alongside shift
 	// Finally you can reset the overlay shift with shift + both the left & right arrows
 
-	import { browser } from '$app/environment'
 	import { storable } from 'kitto/svelte'
 
-	export let mobile = '/mobile.jpg'
-	export let desktop = '/desktop.jpg'
+	interface Props {
+		mobile?: string
+		desktop?: string
+	}
+
+	let { mobile = '/mobile.jpg', desktop = '/desktop.jpg' }: Props = $props()
 
 	const msrc = mobile.split('@')[0]
 	const dsrc = desktop.split('@')[0]
@@ -21,16 +24,18 @@
 	const dsize = desktop.split('@')[1] || 1920
 	const overlay = storable({ opacity: '0.0', shift: 0 }, 'overlay')
 
-	let innerWidth = 0
-	let innerHeight = 0
+	let innerWidth = $state(0)
+	let innerHeight = $state(0)
 
-	$: browser && (document.documentElement.dataset.viewport = `${innerWidth} x ${innerHeight}`)
+	$effect(() => {
+		document.documentElement.dataset.viewport = `${innerWidth} x ${innerHeight}`
+	})
 
-	let lastKeyPress = null
+	let lastKeyPress: string | null = null
 	let lastKeyPressTime = 0
 	let arrowKeys = new Set()
 
-	function keydown({ code, shiftKey, ctrlKey }) {
+	function keydown({ code, shiftKey, ctrlKey }: { code: string; shiftKey: boolean; ctrlKey: boolean }) {
 		const now = Date.now()
 
 		if (shiftKey && (code === 'ArrowLeft' || code === 'ArrowRight')) {
@@ -65,7 +70,7 @@
 	}
 </script>
 
-<svelte:window on:keydown={keydown} on:keyup={keyup} bind:innerHeight bind:innerWidth />
+<svelte:window onkeydown={keydown} onkeyup={keyup} bind:innerHeight bind:innerWidth />
 
 {#if desktop && $overlay.opacity !== '0.0'}
 	<picture class="overlay" style="--mobile:{msize}px; --desktop:{dsize}px">

@@ -3,7 +3,7 @@
 	import Button from '$components/Button.svelte'
 	import { slide, fly } from 'svelte/transition'
 
-	let details = false
+	let details = $state(false)
 </script>
 
 <div class="cookie" in:fly={{ y: 50 }} out:fly={{ y: 50 }}>
@@ -21,10 +21,10 @@
 			</dl>
 		</div>
 	{/if}
-	<Button on:click={() => ($prefs.cookie = false)}>Opt-out</Button>
-	<Button on:click={() => (details = !details)}>Details</Button>
+	<Button onclick={() => ($prefs.cookie = false)}>Opt-out</Button>
+	<Button onclick={() => (details = !details)}>Details</Button>
 	<div></div>
-	<Button on:click={() => ($prefs.cookie = true)}>Accept</Button>
+	<Button onclick={() => ($prefs.cookie = true)}>Accept</Button>
 </div>
 
 <style>
