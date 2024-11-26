@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { prefs } from '$library/stores'
 	import Button from '$components/Button.svelte'
 	import { slide, fly } from 'svelte/transition'

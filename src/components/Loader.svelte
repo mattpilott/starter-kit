@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { afterNavigate, beforeNavigate } from '$app/navigation'
 	import { tweened } from 'svelte/motion'
 	import { cubicOut } from 'svelte/easing'

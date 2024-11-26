@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { afterNavigate } from '$app/navigation'
 	import { onMount } from 'svelte'
 
@@ -18,10 +18,8 @@
 
 	afterNavigate(({ to }) => {
 		gtag('config', id, {
-			/* eslint-disable camelcase */
 			page_title: document.title,
 			page_path: to.url.pathname
-			/* eslint-enable camelcase */
 		})
 	})
 </script>

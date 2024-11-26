@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	// This component allows a design to be overlaid on the page
 	// This helps you to achieve a pixel perfect design implementation
 	// It accepts 2 params for setting the desktop and mobile image paths

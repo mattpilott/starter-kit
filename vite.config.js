@@ -32,6 +32,6 @@ export default defineConfig({
 		'import.meta.env.build': JSON.stringify(formatDate('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
 	},
 	plugins: [sveltekit(), basicSsl()],
-	// resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
+	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
 	server: { proxy: {} }
 })
