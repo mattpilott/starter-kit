@@ -18,25 +18,25 @@
 
 	let { mobile = '/mobile.jpg', desktop = '/desktop.jpg' }: Props = $props()
 
-	const msrc = mobile.split('@')[0]
-	const dsrc = desktop.split('@')[0]
-	const msize = mobile.split('@')[1] || 393
-	const dsize = desktop.split('@')[1] || 1920
+	const msrc: string = mobile.split('@')[0]
+	const dsrc: string = desktop.split('@')[0]
+	const msize: string = mobile.split('@')[1] || '393'
+	const dsize: string = desktop.split('@')[1] || '1920'
 	const overlay = storable({ opacity: '0.0', shift: 0 }, 'overlay')
 
-	let innerWidth = $state(0)
-	let innerHeight = $state(0)
+	let innerWidth: number = $state(0)
+	let innerHeight: number = $state(0)
 
 	$effect(() => {
 		document.documentElement.dataset.viewport = `${innerWidth} x ${innerHeight}`
 	})
 
 	let lastKeyPress: string | null = null
-	let lastKeyPressTime = 0
-	let arrowKeys = new Set()
+	let lastKeyPressTime: number = 0
+	let arrowKeys: Set<string> = new Set()
 
 	function keydown({ code, shiftKey, ctrlKey }: { code: string; shiftKey: boolean; ctrlKey: boolean }) {
-		const now = Date.now()
+		const now: number = Date.now()
 
 		if (shiftKey && (code === 'ArrowLeft' || code === 'ArrowRight')) {
 			arrowKeys.add(code)
@@ -45,15 +45,15 @@
 				$overlay.shift = '0px'
 				arrowKeys.clear()
 			} else {
-				const delta = code === 'ArrowLeft' ? 1 : -1
-				const multiplier = ctrlKey ? 1 : 10
+				const delta: number = code === 'ArrowLeft' ? 1 : -1
+				const multiplier: number = ctrlKey ? 1 : 10
 
 				$overlay.shift = (parseInt($overlay.shift) || 0) + delta * multiplier + 'px'
 			}
 		} else {
-			const key = code.replace('Digit', '')
+			const key: string = code.replace('Digit', '')
 
-			if (isFinite(key)) {
+			if (isFinite(Number(key))) {
 				if (key === '0') {
 					$overlay.opacity = lastKeyPress === '0' && now - lastKeyPressTime < 500 ? '0' : '1'
 				} else {
@@ -65,14 +65,14 @@
 		}
 	}
 
-	function keyup({ code }) {
+	function keyup({ code }: { code: string }) {
 		arrowKeys.delete(code)
 	}
 </script>
 
 <svelte:window onkeydown={keydown} onkeyup={keyup} bind:innerHeight bind:innerWidth />
 
-{#if desktop && $overlay.opacity !== '0.0'}
+{#if desktop && $overlay.opacity !== '0'}
 	<picture class="overlay" style="--mobile:{msize}px; --desktop:{dsize}px">
 		<source srcset={dsrc || msrc} media="(min-width: 640px)" />
 		<img
