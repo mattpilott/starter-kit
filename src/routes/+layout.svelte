@@ -2,6 +2,9 @@
 	import '../app.css'
 	import Loader from '$components/Loader.svelte'
 	import type { Snippet } from 'svelte'
+	// import Cookie from '$components/Cookie.svelte'
+	// import { prefs } from '$library/stores'
+	// import { browser } from '$app/environment'
 
 	interface Props {
 		children?: Snippet
@@ -18,3 +21,7 @@
 <Loader />
 
 {@render children?.()}
+<!-- 
+{#if browser && !$prefs?.cookie}
+	<Cookie />
+{/if} -->
