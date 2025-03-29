@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { afterNavigate, beforeNavigate } from '$app/navigation'
-	import { tweened } from 'svelte/motion'
+	import { Tween } from 'svelte/motion'
 	import { cubicOut } from 'svelte/easing'
 
 	let showLoadingBar = $state(false)
 
-	const progress = tweened(0, {
+	const progress = new Tween(0, {
 		duration: 3500, // The time it takes to move between values
 		easing: cubicOut // The easing function to use
 	})
@@ -29,7 +29,7 @@
 
 {#if showLoadingBar}
 	<div class="progress">
-		<div class="bar" style="width: {$progress * 100}%"></div>
+		<div class="bar" style="width: {progress.current * 100}%"></div>
 	</div>
 {/if}
 
