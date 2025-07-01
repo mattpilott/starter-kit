@@ -5,6 +5,7 @@ import { composeVisitors } from 'lightningcss'
 import { formatDate } from 'kitto'
 import { breakpoints, fluid, size } from 'kitto/lightningcss'
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import devtoolsJson from 'vite-plugin-devtools-json'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
 
@@ -31,7 +32,7 @@ export default defineConfig({
 		'import.meta.env.version': JSON.stringify(version),
 		'import.meta.env.build': JSON.stringify(formatDate('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
 	},
-	plugins: [sveltekit(), basicSsl()],
+	plugins: [sveltekit(), basicSsl(), devtoolsJson()],
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
 	server: { proxy: {} }
 })
