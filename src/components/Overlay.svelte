@@ -35,8 +35,24 @@
 	let lastKeyPressTime: number = 0
 	let arrowKeys: Set<string> = new Set()
 
-	function keydown({ code, shiftKey, ctrlKey }: { code: string; shiftKey: boolean; ctrlKey: boolean }) {
+	function keydown({
+		code,
+		shiftKey,
+		ctrlKey,
+		altKey
+	}: {
+		code: string
+		shiftKey: boolean
+		ctrlKey: boolean
+		altKey: boolean
+	}) {
 		const now: number = Date.now()
+
+		if (shiftKey && altKey && code === 'ArrowUp') {
+			$overlay.shift = 0
+			arrayKeys.clear()
+			return
+		}
 
 		if (shiftKey && (code === 'ArrowLeft' || code === 'ArrowRight')) {
 			arrowKeys.add(code)
