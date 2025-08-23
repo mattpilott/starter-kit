@@ -22,7 +22,7 @@
 	const dsrc: string = desktop.split('@')[0]
 	const msize: string = mobile.split('@')[1] || '393'
 	const dsize: string = desktop.split('@')[1] || '1920'
-	const overlay = storable({ opacity: '0.0', shift: 0 }, 'overlay')
+	const overlay = storable({ opacity: '0.0', shift: '0px' }, 'overlay')
 
 	let innerWidth: number = $state(0)
 	let innerHeight: number = $state(0)
@@ -31,9 +31,9 @@
 		document.documentElement.dataset.viewport = `${innerWidth} x ${innerHeight}`
 	})
 
-	let lastKeyPress: string | null = null
-	let lastKeyPressTime: number = 0
-	let arrowKeys: Set<string> = new Set()
+	let last_key_pressed: string | null = null
+	let last_key_press_time: number = 0
+	let array_keys: Set<string> = new Set()
 
 	function keydown({
 		code,
@@ -49,19 +49,19 @@
 		const now: number = Date.now()
 
 		if (shiftKey && altKey && code === 'ArrowUp') {
-			$overlay.shift = 0
-			arrayKeys.clear()
+			$overlay.shift = '0px'
+			array_keys.clear()
 			return
 		}
 
-		if (shiftKey && (code === 'ArrowLeft' || code === 'ArrowRight')) {
-			arrowKeys.add(code)
+		if (shiftKey && (code === 'ArrowDown' || code === 'ArrowUp')) {
+			array_keys.add(code)
 
-			if (arrowKeys.has('ArrowLeft') && arrowKeys.has('ArrowRight')) {
+			if (array_keys.has('ArrowDown') && array_keys.has('ArrowUp')) {
 				$overlay.shift = '0px'
-				arrowKeys.clear()
+				array_keys.clear()
 			} else {
-				const delta: number = code === 'ArrowLeft' ? 1 : -1
+				const delta: number = code === 'ArrowDown' ? 1 : -1
 				const multiplier: number = ctrlKey ? 1 : 10
 
 				$overlay.shift = (parseInt($overlay.shift) || 0) + delta * multiplier + 'px'
@@ -70,19 +70,22 @@
 			const key: string = code.replace('Digit', '')
 
 			if (isFinite(Number(key))) {
+				if (key === '0' && (ctrlKey || metaKey)) {
+					return
+				}
 				if (key === '0') {
-					$overlay.opacity = lastKeyPress === '0' && now - lastKeyPressTime < 500 ? '0' : '1'
+					$overlay.opacity = last_key_pressed === '0' && now - last_key_press_time < 500 ? '0' : '1'
 				} else {
 					$overlay.opacity = '0.' + key
 				}
-				lastKeyPress = key
-				lastKeyPressTime = now
+				last_key_pressed = key
+				last_key_press_time = now
 			}
 		}
 	}
 
 	function keyup({ code }: { code: string }) {
-		arrowKeys.delete(code)
+		array_keys.delete(code)
 	}
 </script>
 
