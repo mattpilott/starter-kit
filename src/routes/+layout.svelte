@@ -2,15 +2,12 @@
 	import '../app.css'
 	import Loader from '$components/Loader.svelte'
 	import type { Snippet } from 'svelte'
+	import { Overlay } from 'kitto/svelte'
 	// import Cookie from '$components/Cookie.svelte'
 	// import { prefs } from '$library/stores'
 	// import { browser } from '$app/environment'
 
-	interface Props {
-		children?: Snippet
-	}
-
-	let { children }: Props = $props()
+	let { children } = $props()
 </script>
 
 <svelte:head>
