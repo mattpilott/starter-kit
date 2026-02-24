@@ -10,5 +10,8 @@ export default {
 			$components: './src/components',
 			$library: './src/library'
 		}
+	},
+	vitePlugin: {
+		inspector: true
 	}
 }
