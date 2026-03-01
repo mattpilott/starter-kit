@@ -63,3 +63,29 @@ Define your breakpoints just once in the Vite config and use them in your CSS an
 ```svelte
 <Overlay mobile="/mobile.jpg@393" desktop="/desktop.jpg@1920" />
 ```
+
+## Notes
+
+### Local SSL
+
+For local trusted SSL's rather than untrusted self-signed (like that of vite-basic-ssl) use mkcert.
+
+```bash
+brew install mkcert nss
+
+mkcert -install
+
+mkcert localhost
+```
+
+Then add/edit the https object in svelte config
+
+```js
+server: {
+	proxy: {},
+	https: {
+		key: readFileSync(new URL('localhost-key.pem', import.meta.url), 'utf8'),
+		cert: readFileSync(new URL('localhost.pem', import.meta.url), 'utf8')
+	}
+},
+```

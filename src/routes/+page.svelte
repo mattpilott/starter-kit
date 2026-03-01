@@ -252,13 +252,6 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 		border-top: 0.5px solid var(--page-border);
 	}
 
-	.section-title {
-		font: var(--f-h2);
-		font-weight: 600;
-		margin: 0 0 2rem;
-		letter-spacing: -0.02em;
-	}
-
 	.item {
 		padding: 2rem 0;
 		border-bottom: 0.5px solid var(--page-border);

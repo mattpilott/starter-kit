@@ -1,13 +1,22 @@
 import devtoolsJson from 'vite-plugin-devtools-json'
 import { sveltekit } from '@sveltejs/kit/vite'
-import { defineConfig } from 'vite'
+import { defineConfig, createLogger } from 'vite'
 import { readFileSync } from 'fs'
 import { composeVisitors } from 'lightningcss'
 import { formatDate } from 'kitto'
 import { breakpoints, fluid, size } from 'kitto/lightningcss'
-import basicSsl from '@vitejs/plugin-basic-ssl'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
+const logger = createLogger()
+const loggerWarn = logger.warn
+
+logger.warn = (msg, options) => {
+	if (msg.includes('vite:css')) {
+		if (msg.includes("'global'")) return
+		if (msg.includes('@view-transition')) return
+	}
+	loggerWarn(msg, options)
+}
 
 export default defineConfig({
 	build: { cssMinify: 'lightningcss' },
@@ -32,7 +41,14 @@ export default defineConfig({
 		'import.meta.env.version': JSON.stringify(version),
 		'import.meta.env.build': JSON.stringify(formatDate('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
 	},
-	plugins: [sveltekit(), devtoolsJson(), basicSsl()],
+	plugins: [sveltekit(), devtoolsJson()],
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
-	server: { proxy: {} }
+	server: {
+		proxy: {},
+		https: {
+			key: readFileSync(new URL('localhost-key.pem', import.meta.url), 'utf8'),
+			cert: readFileSync(new URL('localhost.pem', import.meta.url), 'utf8')
+		}
+	},
+	customLogger: logger
 })
