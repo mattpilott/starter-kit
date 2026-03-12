@@ -241,6 +241,7 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 
 		span {
 			color: var(--page-text);
+			text-decoration: underline;
 		}
 	}
 
