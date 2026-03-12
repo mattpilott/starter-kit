@@ -1,12 +1,15 @@
 import devtoolsJson from 'vite-plugin-devtools-json'
 import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig, createLogger } from 'vite'
-import { readFileSync } from 'fs'
+import { readFileSync, existsSync } from 'fs'
 import { composeVisitors } from 'lightningcss'
 import { formatDate } from 'kitto'
 import { breakpoints, fluid, size } from 'kitto/lightningcss'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
+const keyUrl = new URL('localhost-key.pem', import.meta.url)
+const certUrl = new URL('localhost.pem', import.meta.url)
+const hasHttpsFiles = existsSync(keyUrl) && existsSync(certUrl)
 const logger = createLogger()
 const loggerWarn = logger.warn
 
@@ -15,6 +18,11 @@ logger.warn = (msg, options) => {
 		if (msg.includes("'global'")) return
 	}
 	loggerWarn(msg, options)
+}
+
+if (!hasHttpsFiles) {
+	// Optional: keeps it visible locally without breaking CI
+	logger.warn('[vite] HTTPS cert/key not found; starting dev server without https.')
 }
 
 export default defineConfig({
@@ -44,9 +52,9 @@ export default defineConfig({
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
 	server: {
 		proxy: {},
-		https: {
-			key: readFileSync(new URL('localhost-key.pem', import.meta.url), 'utf8'),
-			cert: readFileSync(new URL('localhost.pem', import.meta.url), 'utf8')
+		https: hasHttpsFiles && {
+			key: readFileSync(keyUrl, 'utf8'),
+			cert: readFileSync(certUrl, 'utf8')
 		}
 	},
 	customLogger: logger
