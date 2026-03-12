@@ -13,7 +13,6 @@ const loggerWarn = logger.warn
 logger.warn = (msg, options) => {
 	if (msg.includes('vite:css')) {
 		if (msg.includes("'global'")) return
-		if (msg.includes('@view-transition')) return
 	}
 	loggerWarn(msg, options)
 }
