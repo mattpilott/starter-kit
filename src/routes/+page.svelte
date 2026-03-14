@@ -24,7 +24,7 @@
 			desc: 'breakpoints(), fluid(), and size() from kitto/lightningcss.',
 			examples: [
 				{
-					label: 'vite.config.js',
+					label: 'vite.config.ts',
 					code: `visitor: composeVisitors([
   breakpoints({ mobile: 640, tablet: 1024, laptop: 1280, desktop: 1440 }),
   fluid({ vmax: 1600 }),
