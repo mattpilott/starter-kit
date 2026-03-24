@@ -2,7 +2,7 @@
 	import { afterNavigate } from '$app/navigation'
 	import { onMount } from 'svelte'
 
-	let { id } = $props();
+	let { id } = $props()
 
 	function gtag() {
 		window.dataLayer.push(arguments)
