@@ -19,9 +19,18 @@
 
 	const items = [
 		{
-			title: 'LightningCSS + visitors',
-			badge: 'vite.config',
-			desc: 'breakpoints(), fluid(), and size() from kitto/lightningcss.',
+			title: 'TypeScript, lint, and checks',
+			badge: 'package.json',
+			desc: 'TypeScript across the app, Prettier and ESLint (with the Svelte plugin), and `svelte-check-rs` via `bun run check`. Dependencies and scripts assume Bun.',
+			example: `"scripts": {
+  "check": "svelte-kit sync && svelte-check-rs --tsconfig ./tsconfig.json",
+  "lint": "prettier --check . && eslint ."
+}`
+		},
+		{
+			title: 'LightningCSS + kitto visitors',
+			badge: 'vite.config.ts',
+			desc: 'CSS is processed with LightningCSS. Breakpoints are defined once in Vite; `fluid()` gives responsive `clamp()` values; `size` is a width+height shorthand. All three come from `kitto/lightningcss`.',
 			examples: [
 				{
 					label: 'vite.config.ts',
@@ -33,18 +42,19 @@
 				},
 				{
 					label: 'breakpoints()',
-					explain: 'from = min-width, until = max-width. Values come from the config above.',
+					explain:
+						'Use `--from-*` for min-width and `--until-*` for max-width. Pair them to target a range without repeating pixel values in every file.',
 					code: `&lt;style lang="css"&gt;
   @media (--from-mobile) { .sidebar { display: block; } }
   @media (--from-mobile) and (--until-tablet) {
-    .hero { padding: 2rem; }  /* 640px – 1023px only */
+    .hero { padding: 2rem; }  /* 640px – 1023px */
   }
 &lt;/style&gt;`
 				},
 				{
 					label: 'fluid()',
 					explain:
-						'Outputs clamp(min, preferred, max). Preferred value uses 1vw (not 100vw) and a precomputed scale: rem + ((1vw - vmin/100) * scale). Maps viewport growth (vmin→vmax) to value growth (min→max).',
+						'Resolves to `clamp(min, preferred, max)` so type and spacing can scale smoothly between viewports instead of fixed jumps.',
 					code: `&lt;style lang="css"&gt;
   --f-h1: fluid(2.5rem, 5rem) / 1.2 var(--f-family);
   padding: fluid(1rem, 3rem);
@@ -52,7 +62,7 @@
 				},
 				{
 					label: 'size()',
-					explain: 'Shorthand for height and width. Sets both to the same value.',
+					explain: 'Sets `width` and `height` to the same value—handy for icons and square thumbnails.',
 					code: `&lt;style lang="css"&gt;
   .icon { size: 24px; }
   .avatar { size: 3rem; }
@@ -63,90 +73,96 @@
 		{
 			title: 'Design tokens',
 			badge: 'app.css',
-			desc: 'Typography scale, radii, and spacing as CSS variables from day one.',
+			desc: '`:root` holds fluid type steps (`--f-h1` … `--f-body`), radii (`--r-*`), layout width (`--s-wrap`), and base color. Reach for variables before new one-off numbers.',
 			example: `&lt;style lang="css"&gt;
-  /* Use tokens instead of magic numbers */
   .container { max-width: var(--s-wrap); }
   .card { border-radius: var(--r-14); }
   .title { font: var(--f-h2); }
 &lt;/style&gt;`
 		},
 		{
+			title: 'kitto unify',
+			badge: 'app.css',
+			desc: 'Imported first: sensible defaults for type smoothing, links, and buttons, plus a small reset-style baseline. Your tokens and overrides sit in the same file after the import.',
+			example: `@import 'kitto/unify';
+
+:root {
+  --c-black: hsl(230 50% 4%);
+  --f-h1: fluid(2.5rem, 5rem) / 1.2 var(--f-family);
+  /* … */
+}`
+		},
+		{
 			title: 'Security headers',
 			badge: 'hooks.server.ts',
-			desc: 'CSP, X-Frame-Options, Referrer-Policy, and more. Production apps need these.',
-			example: `response.headers.set('X-Frame-Options', 'SAMEORIGIN')
-response.headers.set('Content-Security-Policy', "frame-ancestors 'self'")`
+			desc: 'Every response gets cache control, CSP (`frame-ancestors`), permissions policy, referrer policy, X-Content-Type-Options, and X-Frame-Options—reasonable defaults you can tighten per app.',
+			example: `response.headers.set('Content-Security-Policy', "frame-ancestors 'self'")
+response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+response.headers.set('X-Frame-Options', 'SAMEORIGIN')`
 		},
 		{
 			title: 'handleError',
 			badge: 'hooks.server.ts',
-			desc: 'Users see a generic message in production; you get full error details in dev.',
+			desc: 'In production, users see a short generic message so stack traces are not exposed. In development you still get the real `error.message` for debugging.',
 			example: `// Production: "Whoa there!"
 // Development: actual error.message`
 		},
 		{
-			title: 'HTTPS in dev',
-			badge: 'vite',
-			desc: 'https://localhost for testing OAuth, secure cookies, or secure context APIs.',
-			example: `// Runs at https://localhost:5173
-bun run dev`
+			title: 'HTTPS in dev (optional)',
+			badge: 'vite.config.ts',
+			desc: 'If `localhost.pem` and `localhost-key.pem` exist (e.g. from mkcert), the dev server serves HTTPS—useful for OAuth redirects, `Secure` cookies, or APIs that need a secure context. Otherwise Vite logs a warning and runs over HTTP.',
+			example: `# After mkcert localhost (+ key files next to vite.config.ts)
+bun dev   # https://localhost:5173 when certs are present`
 		},
 		{
-			title: 'Version & build stamps',
-			badge: 'vite.config',
-			desc: 'Inject name, version, and build timestamp at compile time.',
+			title: 'Version and build metadata',
+			badge: 'vite.config.ts · +layout.svelte',
+			desc: '`import.meta.env` exposes package name, version, and a build timestamp; the layout also mirrors version/build in `<meta>` tags for quick checks in the DOM.',
 			example: `import.meta.env.name    // "starter-kit"
 import.meta.env.version // "2.0.0"
-import.meta.env.build   // "24-02-2026@14:32:01"`
+import.meta.env.build   // "24-03-2026@14:32:01"`
 		},
 		{
 			title: 'Path aliases',
-			badge: 'svelte.config',
-			desc: '$components and $library keep imports tidy.',
-			example: `import Button from '$components/Button.svelte'
+			badge: 'svelte.config.js',
+			desc: '`$components` and `$library` map to `src/components` and `src/library` so imports stay short and consistent.',
+			example: `import Loader from '$components/Loader.svelte'
 import { prefs } from '$library/stores'`
 		},
 		{
-			title: 'Loader',
-			badge: 'components/Loader.svelte',
-			desc: 'Progress bar at the top on route changes. Already wired in the layout.',
-			example: `// No setup — it's in +layout.svelte`
+			title: 'Route loader',
+			badge: 'Loader.svelte',
+			desc: 'A slim progress bar runs along the top during client-side navigations. It is already mounted in `+layout.svelte`; adjust or remove there.',
+			example: `// Wired in +layout.svelte — no extra setup on routes`
 		},
 		{
-			title: 'Cookie consent',
-			badge: 'components/Cookie.svelte',
-			desc: 'Opt-in/opt-out with storable prefs. Commented out in layout; uncomment when needed.',
+			title: 'Cookie banner (optional)',
+			badge: 'Cookie.svelte',
+			desc: 'A simple consent UI that reads/writes preferences through `storable`. The layout import is commented out—uncomment when you need GDPR-style consent.',
 			example: `{#if browser && !$prefs?.cookie}
   &lt;Cookie /&gt;
 {/if}`
 		},
 		{
-			title: 'Analytics',
-			badge: 'components/Analytics.svelte',
-			desc: 'Google Analytics with correct afterNavigate updates for SPA routing.',
+			title: 'Google Analytics helper',
+			badge: 'Analytics.svelte',
+			desc: 'Loads gtag and sends a page view on `afterNavigate`, so SPA route changes count as separate pages in GA4.',
 			example: `import Analytics from '$components/Analytics.svelte'
 
 &lt;Analytics id="G-XXXXXXXXXX" /&gt;`
 		},
 		{
-			title: 'Kitto unify',
-			badge: 'app.css',
-			desc: 'Consistent base: antialiasing, link styles, letter-spacing. Variables and unify live in one file.',
-			example: `&lt;style lang="css"&gt;
-  @import 'kitto/unify';
+			title: 'Overlay (pixel perfect helper)',
+			badge: 'kitto/svelte',
+			desc: 'Optional full-viewport design overlay tool with separate mobile and desktop sources, enabling you to achieve pixel perfect design your designer would approve of. Commented in `+layout.svelte`; pass your asset paths when you enable it.',
+			example: `import { Overlay } from 'kitto/svelte'
 
-  :root {
-    --c-black: hsl(230 50% 4%);
-    --f-h1: fluid(2.5rem, 5rem) / 1.2 var(--f-family);
-    /* ... */
-  }
-&lt;/style&gt;`
+&lt;Overlay mobile="/mobile.jpg@393" desktop="/desktop.jpg@1920" /&gt;`
 		},
 		{
-			title: 'storable',
+			title: 'Storable stores',
 			badge: 'kitto/svelte',
-			desc: 'Stores that persist to localStorage. Used for cookie prefs; use for any user preference.',
+			desc: 'Svelte stores that sync to `localStorage`—used for cookie prefs and a good fit for theme or UI toggles that should survive refresh.',
 			example: `import { storable } from 'kitto/svelte'
 
 export const prefs = storable({ cookie: undefined }, 'prefs')`
@@ -156,11 +172,15 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 
 <main class="page">
 	<section class="hero">
-		<h1 class="hero-title">Opinionated SvelteKit starter</h1>
+		<h1 class="hero-title">Starter Kit</h1>
 		<p class="hero-desc">
-			Stock SvelteKit stays unopinionated; you configure everything. This starter picks a stack LightningCSS,
-			design tokens, security headers, and a few conventions — so you can skip the setup and start building.
-			<span>Feel free to delete this page.</span>
+			This repo is a working SvelteKit app not a tutorial site. It comes with Bun-friendly scripts, TypeScript,
+			linting and formatting, LightningCSS helpers for breakpoints and fluid type, basic security headers, and a
+			few small UI pieces (loader, optional cookie banner, analytics helper) already imported or one comment
+			away. Use it as a shortcut so you are not redoing the same wiring on every new project. When you are
+			ready,
+			<span>replace or delete this page</span>
+			and ship your own home screen.
 		</p>
 	</section>
 
@@ -168,8 +188,8 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 		{#each items as item (item)}
 			<article class="item">
 				<div class="item-header">
-					<span class="item-badge">{item.badge}</span>
-					<h3 class="item-title">{item.title}</h3>
+					<h2 class="item-title">{item.title}</h2>
+					<div class="item-badge">{item.badge}</div>
 				</div>
 				<p class="item-desc">{item.desc}</p>
 				{#if item.examples}
@@ -191,10 +211,9 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 
 	<section class="footer">
 		<p class="footer-links">
-			<a href="https://kit.svelte.dev">SvelteKit docs</a>
+			<a href="https://kit.svelte.dev/docs">SvelteKit documentation</a>
 			<span class="separator">·</span>
-			<a href="https://kit.svelte.dev/docs">Get started</a>
-			<a href="/">hello</a>
+			<a href="https://github.com/mattpilott/starter-kit">Starter kit source</a>
 		</p>
 	</section>
 </main>
@@ -236,7 +255,7 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 	.hero-desc {
 		font: var(--f-body);
 		color: var(--page-muted);
-		max-width: 48ch;
+		max-width: 62ch;
 		margin: 0;
 		line-height: 1.6;
 
@@ -265,8 +284,7 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 
 	.item-header {
 		display: flex;
-		flex-wrap: wrap;
-		align-items: baseline;
+		align-items: center;
 		gap: 0.75rem 1rem;
 		margin-bottom: 0.5rem;
 	}
