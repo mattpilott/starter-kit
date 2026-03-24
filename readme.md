@@ -1,41 +1,66 @@
-# create-svelte
+# Starter Kit
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+### An opinionated SvelteKit starter, with the following opinions:
+
+- TypeScript
+- Prettier
+- ESLint
+- MCP (incl. Claude, Cursor, Gemini)
+- Bun
+- Component & Library aliases
+- Viewport-fit cover
+- Ignore lock files
+
+### Along with these features:
+
+- Analytics, Button, Cookie, Loader starter components
+- CSS reset (kitto)
+- Global CSS with sensible defaults and fluid type vars (kitto)
+- Overlay component for pixel perfect frontend (kitto)
+- Preferences store backed by localstorage (kitto)
+- Security headers in hooks
+- Size CSS shorthand (kitto)
+- SSL support with mkcert
+- Svelte Check RS
+- UI state store
+- Variablised media query breakpoints (kitto)
 
 ## Creating a project
 
 If you're seeing this, you've probably already done this step. Congrats!
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+```sh
+# create a new project
+bunx degit https://github.com/mattpilott/starter-kit my-app
+```
 
-# create a new project in my-app
-npm create svelte@latest my-app
+To recreate the underlying SvelteKit setup use this configuration:
+
+```sh
+# recreate this project
+bun x sv@0.12.8 create --template minimal --types ts --add prettier eslint sveltekit-adapter="adapter:auto" devtools-json mcp="ide:claude-code,cursor,gemini+setup:remote" --install bun .
 ```
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've created a project and installed dependencies with `bun i`, start a development server:
 
-```bash
-npm run dev
+```sh
+bun dev
 
 # or start the server and open the app in a new browser tab
-npm run dev -- --open
+bun dev -- --open
 ```
 
 ## Building
 
 To create a production version of your app:
 
-```bash
-npm run build
+```sh
+bun run build
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+You can preview the production build with `bun preview`.
 
 ## Additional Features
 

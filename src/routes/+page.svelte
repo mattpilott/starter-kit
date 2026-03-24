@@ -1,20 +1,20 @@
 <script lang="ts">
 	function highlight(code: string): string {
 		return code
-			.replace(/"[^"\\]*(?:\\.[^"\\]*)*"/g, m => `<span class=hl-s>${m}</span>`)
-			.replace(/'[^'\\]*(?:\\.[^'\\]*)*'/g, m => `<span class=hl-s>${m}</span>`)
-			.replace(/\/\*[\s\S]*?\*\//g, m => `<span class=hl-c>${m}</span>`)
-			.replace(/\/\/[^\n]*/g, m => `<span class=hl-c>${m}</span>`)
-			.replace(/&lt;\/?[\w-]+[^&]*&gt;/g, m => `<span class=hl-t>${m}</span>`)
-			.replace(/(--[\w-]+)/g, m => `<span class=hl-v>${m}</span>`)
-			.replace(/@(media|import)/g, m => `<span class=hl-k>${m}</span>`)
-			.replace(/\b(media|import|var|if|export|return|const|let|and)\b/g, m => `<span class=hl-k>${m}</span>`)
+			.replace(/"[^"\\]*(?:\\.[^"\\]*)*"/g, (m) => `<span class=hl-s>${m}</span>`)
+			.replace(/'[^'\\]*(?:\\.[^'\\]*)*'/g, (m) => `<span class=hl-s>${m}</span>`)
+			.replace(/\/\*[\s\S]*?\*\//g, (m) => `<span class=hl-c>${m}</span>`)
+			.replace(/\/\/[^\n]*/g, (m) => `<span class=hl-c>${m}</span>`)
+			.replace(/&lt;\/?[\w-]+[^&]*&gt;/g, (m) => `<span class=hl-t>${m}</span>`)
+			.replace(/(--[\w-]+)/g, (m) => `<span class=hl-v>${m}</span>`)
+			.replace(/@(media|import)/g, (m) => `<span class=hl-k>${m}</span>`)
+			.replace(/\b(media|import|var|if|export|return|const|let|and)\b/g, (m) => `<span class=hl-k>${m}</span>`)
 			.replace(
 				/\b(fluid|breakpoints|size|composeVisitors|storable|set)\b/g,
-				m => `<span class=hl-f>${m}</span>`
+				(m) => `<span class=hl-f>${m}</span>`
 			)
-			.replace(/(\.[a-zA-Z][\w-]*)(?=[\s{,])/g, m => `<span class=hl-sel>${m}</span>`)
-			.replace(/\b(?<![\w-]-)(\d+\.?\d*)(px|rem|em|%)?\b/g, m => `<span class=hl-n>${m}</span>`)
+			.replace(/(\.[a-zA-Z][\w-]*)(?=[\s{,])/g, (m) => `<span class=hl-sel>${m}</span>`)
+			.replace(/\b(?<![\w-]-)(\d+\.?\d*)(px|rem|em|%)?\b/g, (m) => `<span class=hl-n>${m}</span>`)
 	}
 
 	const items = [
@@ -158,14 +158,14 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 	<section class="hero">
 		<h1 class="hero-title">Opinionated SvelteKit starter</h1>
 		<p class="hero-desc">
-			Stock SvelteKit stays unopinionated; you configure everything. This starter picks a stack — LightningCSS,
+			Stock SvelteKit stays unopinionated; you configure everything. This starter picks a stack LightningCSS,
 			design tokens, security headers, and a few conventions — so you can skip the setup and start building.
 			<span>Feel free to delete this page.</span>
 		</p>
 	</section>
 
 	<section class="items">
-		{#each items as item}
+		{#each items as item (item)}
 			<article class="item">
 				<div class="item-header">
 					<span class="item-badge">{item.badge}</span>
@@ -173,7 +173,7 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 				</div>
 				<p class="item-desc">{item.desc}</p>
 				{#if item.examples}
-					{#each item.examples as ex}
+					{#each item.examples as ex (ex)}
 						<div class="item-example-block">
 							<span class="item-example-label">{ex.label}</span>
 							{#if ex.explain}
@@ -194,6 +194,7 @@ export const prefs = storable({ cookie: undefined }, 'prefs')`
 			<a href="https://kit.svelte.dev">SvelteKit docs</a>
 			<span class="separator">·</span>
 			<a href="https://kit.svelte.dev/docs">Get started</a>
+			<a href="/">hello</a>
 		</p>
 	</section>
 </main>

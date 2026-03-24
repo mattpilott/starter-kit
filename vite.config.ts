@@ -14,14 +14,11 @@ const logger = createLogger()
 const loggerWarn = logger.warn
 
 logger.warn = (msg, options) => {
-	if (msg.includes('vite:css')) {
-		if (msg.includes("'global'")) return
-	}
+	if (msg.includes('vite:css') && msg.includes("'global'")) return
 	loggerWarn(msg, options)
 }
 
 if (!hasHttpsFiles) {
-	// Optional: keeps it visible locally without breaking CI
 	logger.warn('[vite] HTTPS cert/key not found; starting dev server without https.')
 }
 
