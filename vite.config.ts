@@ -7,8 +7,9 @@ import { formatDate } from 'kitto'
 import { breakpoints, fluid, size } from 'kitto/lightningcss'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
-const keyUrl = new URL('localhost-key.pem', import.meta.url)
-const certUrl = new URL('localhost.pem', import.meta.url)
+const host = 'localhost'
+const keyUrl = new URL(`${host}-key.pem`, import.meta.url)
+const certUrl = new URL(`${host}.pem`, import.meta.url)
 const hasHttpsFiles = existsSync(keyUrl) && existsSync(certUrl)
 const logger = createLogger()
 const loggerWarn = logger.warn
