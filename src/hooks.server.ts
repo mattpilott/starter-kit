@@ -1,16 +1,16 @@
-import { sequence } from '@sveltejs/kit/hooks'
-import { env } from '$env/dynamic/private'
+import { ENVIRONMENT } from '$env/static/private'
 
-/** @type {import('@sveltejs/kit').HandleServerError} */
 export function handleError({ error }) {
+	const err = error instanceof Error ? error : new Error('Unknown error')
+
 	return {
-		message: env.ENVIRONMENT !== 'production' ? error.message : 'Whoa there!',
-		code: error?.code ?? 'UNKNOWN',
-		env: env.ENVIRONMENT
+		message: ENVIRONMENT !== 'production' ? err.message : 'Whoa there!',
+		code: 'code' in err && typeof err.code === 'string' ? err.code : 'UNKNOWN',
+		env: ENVIRONMENT
 	}
 }
 
-export const handle = sequence(async ({ event, resolve }) => {
+export const handle = async ({ event, resolve }) => {
 	const response = await resolve(event)
 
 	response.headers.set('Cache-Control', 'no-cache')
@@ -21,4 +21,4 @@ export const handle = sequence(async ({ event, resolve }) => {
 	response.headers.set('X-Frame-Options', 'SAMEORIGIN')
 
 	return response
-})
+}

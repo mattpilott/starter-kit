@@ -108,6 +108,23 @@ response.headers.set('X-Frame-Options', 'SAMEORIGIN')`
 // Development: actual error.message`
 		},
 		{
+			title: 'ENVIRONMENT',
+			badge: '.env',
+			desc: 'Server-only env var used in `hooks.server.ts` to control how much error detail is exposed to users. Set it to `production` in real deployments to avoid leaking stack traces and internal messages.',
+			examples: [
+				{
+					label: 'local dev',
+					explain: 'During development, keep it non-production so you see real error messages.',
+					code: `ENVIRONMENT=development`
+				},
+				{
+					label: 'production',
+					explain: 'In production, set it to `production` so `handleError` returns a generic message.',
+					code: `ENVIRONMENT=production`
+				}
+			]
+		},
+		{
 			title: 'HTTPS in dev (optional)',
 			badge: 'vite.config.ts',
 			desc: 'If `localhost.pem` and `localhost-key.pem` exist (e.g. from mkcert), the dev server serves HTTPS—useful for OAuth redirects, `Secure` cookies, or APIs that need a secure context. Otherwise Vite logs a warning and runs over HTTP.',
@@ -126,7 +143,7 @@ import.meta.env.build   // "24-03-2026@14:32:01"`
 			title: 'Path aliases',
 			badge: 'svelte.config.js',
 			desc: '`$components` and `$library` map to `src/components` and `src/library` so imports stay short and consistent.',
-			example: `import Loader from '$components/Loader.svelte'
+			example: `import Loader from '$components/loader.svelte'
 import { prefs } from '$library/stores'`
 		},
 		{
@@ -147,7 +164,7 @@ import { prefs } from '$library/stores'`
 			title: 'Google Analytics helper',
 			badge: 'Analytics.svelte',
 			desc: 'Loads gtag and sends a page view on `afterNavigate`, so SPA route changes count as separate pages in GA4.',
-			example: `import Analytics from '$components/Analytics.svelte'
+			example: `import Analytics from '$components/analytics.svelte'
 
 &lt;Analytics id="G-XXXXXXXXXX" /&gt;`
 		},
@@ -165,7 +182,7 @@ import { prefs } from '$library/stores'`
 			desc: 'Svelte stores that sync to `localStorage`—used for cookie prefs and a good fit for theme or UI toggles that should survive refresh.',
 			example: `import { storable } from 'kitto/svelte'
 
-export const prefs = storable({ cookie: undefined }, 'prefs')`
+export const prefs = storable({ cookie: false }, 'prefs')`
 		}
 	]
 </script>

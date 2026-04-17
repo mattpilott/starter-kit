@@ -1,27 +1,25 @@
-import devtoolsJson from 'vite-plugin-devtools-json'
+import devtools_json from 'vite-plugin-devtools-json'
 import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig, createLogger } from 'vite'
 import { readFileSync, existsSync } from 'fs'
 import { composeVisitors } from 'lightningcss'
-import { formatDate } from 'kitto'
+import { format_date } from 'kitto'
 import { breakpoints, fluid, size } from 'kitto/lightningcss'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
-const host = 'localhost'
-const keyUrl = new URL(`${host}-key.pem`, import.meta.url)
-const certUrl = new URL(`${host}.pem`, import.meta.url)
-const hasHttpsFiles = existsSync(keyUrl) && existsSync(certUrl)
+const key_url = new URL('localhost-key.pem', import.meta.url)
+const cert_url = new URL('localhost.pem', import.meta.url)
+const has_https_files = existsSync(key_url) && existsSync(cert_url)
 const logger = createLogger()
-const loggerWarn = logger.warn
+const logger_warn = logger.warn
 
 logger.warn = (msg, options) => {
+	// Ignore CSS warnings about global styles
 	if (msg.includes('vite:css') && msg.includes("'global'")) return
-	loggerWarn(msg, options)
+	logger_warn(msg, options)
 }
 
-if (!hasHttpsFiles) {
-	logger.warn('[vite] HTTPS cert/key not found; starting dev server without https.')
-}
+if (!has_https_files) logger.warn('[vite] HTTPS cert/key not found; starting dev server without https.')
 
 export default defineConfig({
 	build: { cssMinify: 'lightningcss' },
@@ -37,6 +35,7 @@ export default defineConfig({
 					desktop: 1440
 				}),
 				fluid({ vmax: 1600 }),
+				// @ts-expect-error - Known issue with LightningCSS
 				size
 			])
 		}
@@ -44,16 +43,18 @@ export default defineConfig({
 	define: {
 		'import.meta.env.name': JSON.stringify(name),
 		'import.meta.env.version': JSON.stringify(version),
-		'import.meta.env.build': JSON.stringify(formatDate('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
+		'import.meta.env.build': JSON.stringify(format_date('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
 	},
-	plugins: [sveltekit(), devtoolsJson()],
+	plugins: [sveltekit(), devtools_json()],
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
 	server: {
 		proxy: {},
-		https: hasHttpsFiles && {
-			key: readFileSync(keyUrl, 'utf8'),
-			cert: readFileSync(certUrl, 'utf8')
-		}
+		https: has_https_files
+			? {
+					key: readFileSync(key_url, 'utf8'),
+					cert: readFileSync(cert_url, 'utf8')
+				}
+			: undefined
 	},
 	customLogger: logger
 })
