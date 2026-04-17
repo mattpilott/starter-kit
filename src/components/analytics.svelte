@@ -2,10 +2,14 @@
 	import { afterNavigate } from '$app/navigation'
 	import { onMount } from 'svelte'
 
-	let { id } = $props()
+	interface Props {
+		id?: string
+	}
 
-	function gtag() {
-		window.dataLayer.push(arguments)
+	let { id }: Props = $props()
+
+	function gtag(...args: Array<unknown>) {
+		window.dataLayer.push(args)
 	}
 
 	onMount(() => {
@@ -17,6 +21,7 @@
 	})
 
 	afterNavigate(({ to }) => {
+		if (!id || !to) return
 		gtag('config', id, {
 			page_title: document.title,
 			page_path: to.url.pathname
@@ -25,5 +30,7 @@
 </script>
 
 <svelte:head>
-	<script async src="https://www.googletagmanager.com/gtag/js?id={id}"></script>
+	{#if id}
+		<script async src="https://www.googletagmanager.com/gtag/js?id={id}"></script>
+	{/if}
 </svelte:head>

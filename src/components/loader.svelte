@@ -3,7 +3,7 @@
 	import { Tween } from 'svelte/motion'
 	import { cubicOut } from 'svelte/easing'
 
-	let showLoadingBar = $state(false)
+	let show_loading_bar = $state(false)
 
 	const progress = new Tween(0, {
 		duration: 3500, // The time it takes to move between values
@@ -12,7 +12,7 @@
 
 	beforeNavigate(({ from, to }) => {
 		if (from?.url.pathname !== to?.url.pathname) {
-			showLoadingBar = true
+			show_loading_bar = true
 			progress.set(0.7)
 		}
 	})
@@ -21,13 +21,13 @@
 		progress.set(1, { duration: 500 })
 
 		setTimeout(() => {
-			showLoadingBar = false
+			show_loading_bar = false
 			progress.set(0, { duration: 0 })
 		}, 600)
 	})
 </script>
 
-{#if showLoadingBar}
+{#if show_loading_bar}
 	<div class="progress">
 		<div class="bar" style="width: {progress.current * 100}%"></div>
 	</div>
