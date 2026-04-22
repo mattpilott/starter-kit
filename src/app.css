@@ -2,7 +2,8 @@
 
 :root {
 	/* Colors */
-	--c-black: hsl(230 50% 4%);
+	--c-black: oklch(13.04% 0.01926 269.811);
+	--c-white: oklch(96.72% 0.00861 269.811);
 
 	/* Radius */
 	--r-x: 1000px;
@@ -13,6 +14,12 @@
 	--r-6: 6px;
 
 	/* Sizes */
+	--s-60: 60px;
+	--s-50: 50px;
+	--s-40: 40px;
+	--s-30: 30px;
+	--s-20: 20px;
+	--s-10: 10px;
 	--s-wrap: 105rem;
 
 	/* Typography */

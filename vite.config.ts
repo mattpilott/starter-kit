@@ -5,6 +5,7 @@ import { readFileSync, existsSync } from 'fs'
 import { composeVisitors } from 'lightningcss'
 import { format_date } from 'kitto'
 import { breakpoints, fluid, size } from 'kitto/lightningcss'
+import { redirects, schema } from 'storyloco/vite'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
 const key_url = new URL('localhost-key.pem', import.meta.url)
@@ -45,7 +46,15 @@ export default defineConfig({
 		'import.meta.env.version': JSON.stringify(version),
 		'import.meta.env.build': JSON.stringify(format_date('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
 	},
-	plugins: [sveltekit(), devtools_json()],
+	plugins: [
+		sveltekit(),
+		devtools_json(),
+		redirects(),
+		schema({
+			output_path: 'src/library',
+			filename: 'components.schema.build.ts'
+		})
+	],
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
 	server: {
 		proxy: {},
@@ -58,3 +67,7 @@ export default defineConfig({
 	},
 	customLogger: logger
 })
+
+export type StoryblokCustomPlugins = {
+	'uiloco-seo': import('storyloco/seo').SEO
+}

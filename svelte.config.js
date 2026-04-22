@@ -5,11 +5,15 @@ export default {
 	kit: {
 		adapter: adapter(),
 		alias: {
+			$blocks: './src/blocks',
 			$components: './src/components',
-			$library: './src/library'
+			$library: './src/library',
+			$routes: './src/routes',
+			$templates: './src/templates'
 		}
 	},
 	vitePlugin: {
+		inspector: true,
 		dynamicCompileOptions: ({ filename }) => (filename.includes('node_modules') ? undefined : { runes: true })
 	}
 }

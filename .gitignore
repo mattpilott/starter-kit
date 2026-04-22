@@ -30,3 +30,6 @@ bun.lockb
 
 # SSL
 *.pem
+
+*.build.*
+.vercel
