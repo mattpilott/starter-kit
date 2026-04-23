@@ -9,7 +9,8 @@ export default {
 			$components: './src/components',
 			$library: './src/library',
 			$routes: './src/routes',
-			$templates: './src/templates'
+			$templates: './src/templates',
+			$convex: './src/convex'
 		}
 	},
 	vitePlugin: {

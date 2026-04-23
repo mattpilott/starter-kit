@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit'
 import { editable, StoryblokClient, type Storyblok } from 'storyloco'
 import type { ISbStoryData } from '@storyblok/svelte'
 import type { Component } from 'svelte'
-import type { Page, StoryblokRichtext, Blok, Layout } from './components.schema.build.js'
+import type { Page, StoryblokRichtext, Blok } from './components.schema.build.js'
 import { createAttachmentKey as attach } from 'svelte/attachments'
 
 /* Export for convenience in other files */

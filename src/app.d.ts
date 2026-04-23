@@ -13,6 +13,16 @@ declare global {
 		readonly build: string
 	}
 
+	namespace NodeJS {
+		interface ProcessEnv {
+			SITE_URL: string
+			BETTER_AUTH_SECRET: string
+			ZEPTO_TOKEN: string
+			DEFAULT_EMAIL_FROM: string
+			DEFAULT_EMAIL_TO: string
+		}
+	}
+
 	namespace App {
 		interface Error {
 			message: string
@@ -21,6 +31,7 @@ declare global {
 		}
 		interface Locals {
 			version: import('$library/storyblok.js').Version
+			token: string | undefined
 		}
 		interface PageData {
 			readonly layout: LayoutData['layout']

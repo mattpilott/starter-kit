@@ -2,12 +2,16 @@
 	import '../app.css'
 	import Loader from '$components/loader.svelte'
 	import Metatags from '$components/metatags.svelte'
+	import { createSvelteAuthClient } from '@mmailaender/convex-better-auth-svelte/svelte'
+	import { auth_client } from '$library/auth_client'
 	// import { Overlay } from 'kitto/svelte'
 	// import Cookie from '$components/cookie.svelte'
 	// import { prefs } from '$library/stores'
 	// import { browser } from '$app/environment'
 
 	let { children, data } = $props()
+
+	createSvelteAuthClient({ authClient: auth_client, getServerState: () => data.auth_state })
 </script>
 
 <svelte:head>
