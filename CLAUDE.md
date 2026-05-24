@@ -2,7 +2,7 @@
 
 - **Language**: TypeScript
 - **Package Manager**: bun
-- **Add-ons**: prettier, eslint, sveltekit-adapter, devtools-json, mcp
+- **Add-ons**: oxfmt, eslint, sveltekit-adapter, devtools-json, mcp
 
 ---
 

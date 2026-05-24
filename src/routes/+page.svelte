@@ -21,10 +21,11 @@
 		{
 			title: 'TypeScript, lint, and checks',
 			badge: 'package.json',
-			desc: 'TypeScript across the app, Prettier and ESLint (with the Svelte plugin), and `svelte-check-rs` via `bun run check`. Dependencies and scripts assume Bun.',
+			desc: 'TypeScript across the app, Oxfmt and ESLint (with the Svelte plugin), and `svelte-check-rs` via `bun run check`. Dependencies and scripts assume Bun.',
 			example: `"scripts": {
   "check": "svelte-kit sync && svelte-check-rs --tsconfig ./tsconfig.json",
-  "lint": "prettier --check . && eslint ."
+  "lint": "oxfmt --check . && eslint .",
+  "format": "oxfmt"
 }`
 		},
 		{
