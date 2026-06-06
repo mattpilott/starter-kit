@@ -6,7 +6,9 @@
 	"trailingComma": "none",
 	"printWidth": 115,
 	"tabWidth": 3,
+	"arrowParens": "avoid",
 	"semi": false,
+	"bracketSameLine": true,
 	"sortPackageJson": false,
 	"ignorePatterns": []
 }

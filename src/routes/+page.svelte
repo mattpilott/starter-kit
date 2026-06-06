@@ -10,20 +10,20 @@
 
 	function highlight(code: string): string {
 		return code
-			.replace(/"[^"\\]*(?:\\.[^"\\]*)*"/g, (m) => `<span class=hl-s>${m}</span>`)
-			.replace(/'[^'\\]*(?:\\.[^'\\]*)*'/g, (m) => `<span class=hl-s>${m}</span>`)
-			.replace(/\/\*[\s\S]*?\*\//g, (m) => `<span class=hl-c>${m}</span>`)
-			.replace(/\/\/[^\n]*/g, (m) => `<span class=hl-c>${m}</span>`)
-			.replace(/&lt;\/?[\w-]+[^&]*&gt;/g, (m) => `<span class=hl-t>${m}</span>`)
-			.replace(/(--[\w-]+)/g, (m) => `<span class=hl-v>${m}</span>`)
-			.replace(/@(media|import)/g, (m) => `<span class=hl-k>${m}</span>`)
-			.replace(/\b(media|import|var|if|export|return|const|let|and)\b/g, (m) => `<span class=hl-k>${m}</span>`)
+			.replace(/"[^"\\]*(?:\\.[^"\\]*)*"/g, m => `<span class=hl-s>${m}</span>`)
+			.replace(/'[^'\\]*(?:\\.[^'\\]*)*'/g, m => `<span class=hl-s>${m}</span>`)
+			.replace(/\/\*[\s\S]*?\*\//g, m => `<span class=hl-c>${m}</span>`)
+			.replace(/\/\/[^\n]*/g, m => `<span class=hl-c>${m}</span>`)
+			.replace(/&lt;\/?[\w-]+[^&]*&gt;/g, m => `<span class=hl-t>${m}</span>`)
+			.replace(/(--[\w-]+)/g, m => `<span class=hl-v>${m}</span>`)
+			.replace(/@(media|import)/g, m => `<span class=hl-k>${m}</span>`)
+			.replace(/\b(media|import|var|if|export|return|const|let|and)\b/g, m => `<span class=hl-k>${m}</span>`)
 			.replace(
 				/\b(fluid|breakpoints|size|composeVisitors|storable|set|fontless)\b/g,
-				(m) => `<span class=hl-f>${m}</span>`
+				m => `<span class=hl-f>${m}</span>`
 			)
-			.replace(/(\.[a-zA-Z][\w-]*)(?=[\s{,])/g, (m) => `<span class=hl-sel>${m}</span>`)
-			.replace(/\b(?<![\w-]-)(\d+\.?\d*)(px|rem|em|%)?\b/g, (m) => `<span class=hl-n>${m}</span>`)
+			.replace(/(\.[a-zA-Z][\w-]*)(?=[\s{,])/g, m => `<span class=hl-sel>${m}</span>`)
+			.replace(/\b(?<![\w-]-)(\d+\.?\d*)(px|rem|em|%)?\b/g, m => `<span class=hl-n>${m}</span>`)
 	}
 
 	const items = $derived([
