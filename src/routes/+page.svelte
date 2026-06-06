@@ -1,4 +1,13 @@
 <script lang="ts">
+	import { format_date } from 'kitto'
+	import { onMount } from 'svelte'
+
+	const build_format = '{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'
+
+	// Start with the build-time value (matches SSR) then swap to the time the page was opened on mount.
+	let opened = $state(import.meta.env.build)
+	onMount(() => (opened = format_date(build_format)))
+
 	function highlight(code: string): string {
 		return code
 			.replace(/"[^"\\]*(?:\\.[^"\\]*)*"/g, (m) => `<span class=hl-s>${m}</span>`)
@@ -10,14 +19,14 @@
 			.replace(/@(media|import)/g, (m) => `<span class=hl-k>${m}</span>`)
 			.replace(/\b(media|import|var|if|export|return|const|let|and)\b/g, (m) => `<span class=hl-k>${m}</span>`)
 			.replace(
-				/\b(fluid|breakpoints|size|composeVisitors|storable|set)\b/g,
+				/\b(fluid|breakpoints|size|composeVisitors|storable|set|fontless)\b/g,
 				(m) => `<span class=hl-f>${m}</span>`
 			)
 			.replace(/(\.[a-zA-Z][\w-]*)(?=[\s{,])/g, (m) => `<span class=hl-sel>${m}</span>`)
 			.replace(/\b(?<![\w-]-)(\d+\.?\d*)(px|rem|em|%)?\b/g, (m) => `<span class=hl-n>${m}</span>`)
 	}
 
-	const items = [
+	const items = $derived([
 		{
 			title: 'TypeScript, lint, and checks',
 			badge: 'package.json',
@@ -94,6 +103,29 @@
 }`
 		},
 		{
+			title: 'Font optimization',
+			badge: 'vite.config.ts',
+			desc: '`fontless` is wired in as a Vite plugin. It scans your CSS for `font-family` declarations, resolves them through providers (Google, Bunny, FontShare, FontSource…), self-hosts the files, and injects optimized `@font-face` rules with metric-based fallbacks to cut layout shift (CLS). No runtime JS—just use fonts in CSS as normal.',
+			examples: [
+				{
+					label: 'vite.config.ts',
+					explain:
+						'Already registered alongside the other plugins. Optionally configure providers, weights, or specific families.',
+					code: `import { fontless } from 'fontless'
+
+plugins: [sveltekit(), devtools_json(), fontless()]`
+				},
+				{
+					label: 'use a font',
+					explain:
+						'Reference any provider font by name; fontless detects it, downloads it, and generates the `@font-face` declarations for you.',
+					code: `&lt;style lang="css"&gt;
+  .title { font-family: "Poppins", sans-serif; }
+&lt;/style&gt;`
+				}
+			]
+		},
+		{
 			title: 'Security headers',
 			badge: 'hooks.server.ts',
 			desc: 'Every response gets cache control, CSP (`frame-ancestors`), permissions policy, referrer policy, X-Content-Type-Options, and X-Frame-Options—reasonable defaults you can tighten per app.',
@@ -135,10 +167,10 @@ bun dev   # https://localhost:5173 when certs are present`
 		{
 			title: 'Version and build metadata',
 			badge: 'vite.config.ts · +layout.svelte',
-			desc: '`import.meta.env` exposes package name, version, and a build timestamp; the layout also mirrors version/build in `<meta>` tags for quick checks in the DOM.',
-			example: `import.meta.env.name    // "starter-kit"
-import.meta.env.version // "2.0.0"
-import.meta.env.build   // "24-03-2026@14:32:01"`
+			desc: '`import.meta.env` exposes package name, version, and a build timestamp; the layout also mirrors version/build in `<meta>` tags for quick checks in the DOM. The timestamp below is rendered live with `format_date` from kitto—it shows when you opened this page.',
+			example: `import.meta.env.name    // starter-kit
+import.meta.env.version // 2.0.0
+import.meta.env.build   // ${opened}`
 		},
 		{
 			title: 'Path aliases',
@@ -185,7 +217,7 @@ import { prefs } from '$library/stores'`
 
 export const prefs = storable({ cookie: false }, 'prefs')`
 		}
-	]
+	])
 </script>
 
 <main class="page">

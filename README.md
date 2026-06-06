@@ -15,6 +15,7 @@
 
 - Analytics, Button, Cookie, Loader starter components
 - CSS reset (kitto)
+- Font optimization with metric-based fallbacks (fontless)
 - Global CSS with sensible defaults and fluid type vars (kitto)
 - Overlay component for pixel perfect frontend (kitto)
 - Preferences store backed by localstorage (kitto)
@@ -64,6 +65,24 @@ bun run build
 You can preview the production build with `bun preview`.
 
 ## Additional Features
+
+### Font optimization
+
+[`fontless`](https://npmx.dev/package/fontless) is registered as a Vite plugin in `vite.config.ts`. It scans your CSS for `font-family` declarations, resolves them through providers (Google, Bunny, FontShare, FontSource and more), self-hosts the font files, and injects optimized `@font-face` rules with metric-based fallbacks to reduce Cumulative Layout Shift (CLS). There's no runtime JavaScript—just use fonts in CSS as you normally would.
+
+```ts
+// vite.config.ts
+import { fontless } from 'fontless'
+
+plugins: [sveltekit(), devtools_json(), fontless()]
+```
+
+```css
+/* Use any provider font by name; fontless handles the rest */
+.title {
+	font-family: 'Poppins', sans-serif;
+}
+```
 
 ### Height & width shorthand
 
