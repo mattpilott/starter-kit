@@ -1,4 +1,4 @@
-import devtools_json from 'vite-plugin-devtools-json'
+import adapter from '@sveltejs/adapter-auto'
 import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig, createLogger } from 'vite'
 import { readFileSync, existsSync } from 'fs'
@@ -46,7 +46,20 @@ export default defineConfig({
 		'import.meta.env.version': JSON.stringify(version),
 		'import.meta.env.build': JSON.stringify(format_date('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
 	},
-	plugins: [sveltekit(), devtools_json(), fontless()],
+	plugins: [
+		sveltekit({
+			compilerOptions: {
+				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
+				runes: ({ filename }) => (filename.split(/[/\\]/).includes('node_modules') ? undefined : true)
+			},
+			adapter: adapter(),
+			alias: {
+				$components: './src/components',
+				$library: './src/library'
+			}
+		}),
+		fontless()
+	],
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
 	server: {
 		proxy: {},

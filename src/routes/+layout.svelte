@@ -1,4 +1,5 @@
 <script lang="ts">
+	import favicon from '$library/assets/favicon.svg'
 	import '../app.css'
 	import Loader from '$components/loader.svelte'
 	// import { Overlay } from 'kitto/svelte'
@@ -12,6 +13,7 @@
 <svelte:head>
 	<meta name="version" content={import.meta.env.version} />
 	<meta name="build" content={import.meta.env.build} />
+	<link rel="icon" href={favicon} />
 </svelte:head>
 
 <Loader />
