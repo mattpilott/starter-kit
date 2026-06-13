@@ -4,6 +4,7 @@
 	import { cubicOut } from 'svelte/easing'
 
 	let show_loading_bar = $state(false)
+	let hide_timeout: ReturnType<typeof setTimeout>
 
 	const progress = new Tween(0, {
 		duration: 3500, // The time it takes to move between values
@@ -12,6 +13,8 @@
 
 	beforeNavigate(({ from, to }) => {
 		if (from?.url.pathname !== to?.url.pathname) {
+			// Cancel a pending hide so a quick second navigation doesn't blank the bar mid-load.
+			clearTimeout(hide_timeout)
 			show_loading_bar = true
 			progress.set(0.7)
 		}
@@ -20,7 +23,7 @@
 	afterNavigate(() => {
 		progress.set(1, { duration: 500 })
 
-		setTimeout(() => {
+		hide_timeout = setTimeout(() => {
 			show_loading_bar = false
 			progress.set(0, { duration: 0 })
 		}, 600)
