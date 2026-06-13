@@ -199,7 +199,7 @@ import { prefs } from '$library/stores'`
 		{
 			title: 'Google Analytics helper',
 			badge: 'Analytics.svelte',
-			desc: 'Loads gtag only after consent (`prefs.cookies === true`) and sends a page view on each `afterNavigate`, so SPA route changes count as separate pages in GA4.',
+			desc: 'Google Consent Mode v2—gtag loads for everyone but defaults to denied until the user accepts (then granted via `prefs.cookies`), so non-consenting visits get anonymous cookieless pings. Sends a page view on each `afterNavigate` for SPA route changes.',
 			example: `import Analytics from '$components/analytics.svelte'
 
 &lt;Analytics id="G-XXXXXXXXXX" /&gt;`

@@ -14,27 +14,43 @@
 		window.dataLayer.push(args)
 	}
 
-	// Load + init GA only once consent is granted (reacts if the user accepts later).
+	function consent(state: 'granted' | 'denied') {
+		return {
+			ad_storage: state,
+			ad_user_data: state,
+			ad_personalization: state,
+			analytics_storage: state
+		}
+	}
+
+	// Google Consent Mode v2: load gtag for everyone, defaulting to the stored choice (denied until the
+	// user decides) before the library runs, then update it when the choice changes. Denied sends
+	// anonymous cookieless pings; granted enables full analytics.
 	$effect(() => {
-		if (!id || $prefs.cookies !== true || initialised) return
-		initialised = true
-		window.dataLayer = window.dataLayer || []
-		gtag('js', new Date())
-		gtag('config', id) // counts the page that was open when consent was granted
+		if (!id) return
+
+		if (!initialised) {
+			initialised = true
+			window.dataLayer = window.dataLayer || []
+			gtag('consent', 'default', consent($prefs.cookies ? 'granted' : 'denied'))
+			gtag('js', new Date())
+			gtag('config', id)
+
+			const script = document.createElement('script')
+			script.async = true
+			script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`
+			document.head.appendChild(script)
+		} else if ($prefs.cookies !== undefined) {
+			gtag('consent', 'update', consent($prefs.cookies ? 'granted' : 'denied'))
+		}
 	})
 
-	// Track client-side navigations; skip the initial load (no `from`) — config already counted it.
+	// Track client-side navigations; skip the initial load (config already counted it).
 	afterNavigate(({ from, to }) => {
-		if (!id || $prefs.cookies !== true || !from || !to) return
+		if (!id || !from || !to) return
 		gtag('event', 'page_view', {
 			page_title: document.title,
 			page_path: to.url.pathname
 		})
 	})
 </script>
-
-<svelte:head>
-	{#if id && $prefs.cookies === true}
-		<script async src="https://www.googletagmanager.com/gtag/js?id={id}"></script>
-	{/if}
-</svelte:head>
