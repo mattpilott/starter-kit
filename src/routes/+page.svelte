@@ -187,16 +187,19 @@ import { prefs } from '$library/stores'`
 		},
 		{
 			title: 'Cookie banner (optional)',
-			badge: 'Cookie.svelte',
-			desc: 'A simple consent UI that reads/writes preferences through `storable`. The layout import is commented out—uncomment when you need GDPR-style consent.',
-			example: `{#if browser && !$prefs?.cookie}
-  &lt;Cookie /&gt;
+			badge: 'Cookies.svelte',
+			desc: 'A consent UI backed by the `prefs` store—tri-state `cookies`: `undefined` undecided, `true` accepted, `false` rejected. It self-guards for SSR, so just render it; any feature can react to the choice. Commented out in `+layout.svelte`—enable for GDPR-style consent.',
+			example: `&lt;Cookies /&gt;
+
+// gate any feature on the decision
+{#if $prefs.cookies === true}
+  &lt;Map /&gt;
 {/if}`
 		},
 		{
 			title: 'Google Analytics helper',
 			badge: 'Analytics.svelte',
-			desc: 'Loads gtag and sends a page view on `afterNavigate`, so SPA route changes count as separate pages in GA4.',
+			desc: 'Loads gtag only after consent (`prefs.cookies === true`) and sends a page view on each `afterNavigate`, so SPA route changes count as separate pages in GA4.',
 			example: `import Analytics from '$components/analytics.svelte'
 
 &lt;Analytics id="G-XXXXXXXXXX" /&gt;`
@@ -212,10 +215,11 @@ import { prefs } from '$library/stores'`
 		{
 			title: 'Storable stores',
 			badge: 'kitto/svelte',
-			desc: 'Svelte stores that sync to `localStorage`—used for cookie prefs and a good fit for theme or UI toggles that should survive refresh.',
+			desc: 'Svelte stores that sync to `localStorage` and across tabs—used for the tri-state cookie consent and a good fit for theme or UI toggles that should survive refresh.',
 			example: `import { storable } from 'kitto/svelte'
 
-export const prefs = storable({ cookie: false }, 'prefs')`
+// undefined = undecided, true = accepted, false = rejected
+export const prefs = storable&lt;{ cookies?: boolean }&gt;({}, 'prefs')`
 		}
 	])
 </script>

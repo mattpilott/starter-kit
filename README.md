@@ -13,7 +13,7 @@
 
 ### Along with these features:
 
-- Analytics, Button, Cookie, Loader starter components
+- Analytics, Button, Cookies, Loader starter components
 - CSS reset (kitto)
 - Font optimization with metric-based fallbacks (fontless)
 - Global CSS with sensible defaults and fluid type vars (kitto)

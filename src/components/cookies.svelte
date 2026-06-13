@@ -7,8 +7,8 @@
 	let details = $state(false)
 </script>
 
-{#if browser && !$prefs?.cookie}
-	<div class="cookie" role="region" aria-label="Cookie consent" in:fly={{ y: 50 }} out:fly={{ y: 50 }}>
+{#if browser && $prefs.cookies === undefined}
+	<div class="cookies" role="region" aria-label="Cookie consent" in:fly={{ y: 50 }} out:fly={{ y: 50 }}>
 		<div class="title">This site uses cookies to measure and improve your experience.</div>
 		{#if details}
 			<div class="details" transition:slide>
@@ -24,15 +24,15 @@
 				</dl>
 			</div>
 		{/if}
-		<Button onclick={() => ($prefs.cookie = false)}>Opt-out</Button>
+		<Button onclick={() => ($prefs.cookies = false)}>Opt-out</Button>
 		<Button onclick={() => (details = !details)}>Details</Button>
 		<div></div>
-		<Button onclick={() => ($prefs.cookie = true)}>Accept</Button>
+		<Button onclick={() => ($prefs.cookies = true)}>Accept</Button>
 	</div>
 {/if}
 
 <style>
-	.cookie {
+	.cookies {
 		background-color: white;
 		border-radius: var(--r-14);
 		box-shadow: 0 10px 40px hsl(0 0% 0% / 0.2);

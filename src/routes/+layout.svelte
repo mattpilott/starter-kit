@@ -4,7 +4,7 @@
 	import og from '$library/assets/og.png'
 	import Loader from '$components/loader.svelte'
 	import Seo from '$components/seo.svelte'
-	import Cookie from '$components/cookie.svelte'
+	import Cookies from '$components/cookies.svelte'
 	// import { Overlay } from 'kitto/svelte'
 
 	let { children } = $props()
@@ -19,4 +19,4 @@
 <Seo name="Starter Kit" description="An opinionated SvelteKit starter kit" image={og} locale="en_GB" />
 <Loader />
 {@render children?.()}
-<Cookie />
+<Cookies />
