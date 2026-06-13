@@ -39,7 +39,7 @@ To recreate the underlying SvelteKit setup use this configuration:
 
 ```sh
 # recreate this project
-bun x sv@0.12.8 create --template minimal --types ts --add eslint sveltekit-adapter="adapter:auto" devtools-json mcp="ide:claude-code,cursor,gemini+setup:remote" --install bun .
+bun x sv@0.12.8 create --template minimal --types ts --add eslint sveltekit-adapter="adapter:auto" mcp="ide:claude-code,cursor,gemini+setup:remote" --install bun .
 bun add -d oxfmt
 ```
 
@@ -74,7 +74,7 @@ You can preview the production build with `bun preview`.
 // vite.config.ts
 import { fontless } from 'fontless'
 
-plugins: [sveltekit(), devtools_json(), fontless()]
+plugins: [sveltekit(), fontless()]
 ```
 
 ```css
@@ -123,14 +123,19 @@ mkcert -install
 mkcert localhost
 ```
 
-Then add/edit the https object in svelte config
+Drop the generated `localhost.pem` and `localhost-key.pem` next to `vite.config.ts`. The dev server detects them (`has_https_files`) and serves HTTPS automatically—no config edit needed. Without the certs it logs a warning and runs over HTTP.
 
-```js
+```ts
+// vite.config.ts — already wired up
+const has_https_files = existsSync(key_url) && existsSync(cert_url)
+
 server: {
 	proxy: {},
-	https: {
-		key: readFileSync(new URL('localhost-key.pem', import.meta.url), 'utf8'),
-		cert: readFileSync(new URL('localhost.pem', import.meta.url), 'utf8')
-	}
+	https: has_https_files
+		? {
+				key: readFileSync(key_url, 'utf8'),
+				cert: readFileSync(cert_url, 'utf8')
+			}
+		: undefined
 },
 ```

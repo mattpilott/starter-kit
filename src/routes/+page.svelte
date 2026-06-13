@@ -113,7 +113,7 @@
 						'Already registered alongside the other plugins. Optionally configure providers, weights, or specific families.',
 					code: `import { fontless } from 'fontless'
 
-plugins: [sveltekit(), devtools_json(), fontless()]`
+plugins: [sveltekit(), fontless()]`
 				},
 				{
 					label: 'use a font',
@@ -174,7 +174,7 @@ import.meta.env.build   // ${opened}`
 		},
 		{
 			title: 'Path aliases',
-			badge: 'svelte.config.js',
+			badge: 'vite.config.ts',
 			desc: '`$components` and `$library` map to `src/components` and `src/library` so imports stay short and consistent.',
 			example: `import Loader from '$components/loader.svelte'
 import { prefs } from '$library/stores'`

@@ -11,6 +11,8 @@
 </script>
 
 <svelte:head>
+	<title>Starter Kit</title>
+	<meta name="description" content="An opinionated SvelteKit starter kit" />
 	<meta name="version" content={import.meta.env.version} />
 	<meta name="build" content={import.meta.env.build} />
 	<link rel="icon" href={favicon} />
