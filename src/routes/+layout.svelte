@@ -4,10 +4,8 @@
 	import og from '$library/assets/og.png'
 	import Loader from '$components/loader.svelte'
 	import Seo from '$components/seo.svelte'
+	import Cookie from '$components/cookie.svelte'
 	// import { Overlay } from 'kitto/svelte'
-	// import Cookie from '$components/cookie.svelte'
-	// import { prefs } from '$library/stores'
-	// import { browser } from '$app/environment'
 
 	let { children } = $props()
 </script>
@@ -19,11 +17,6 @@
 </svelte:head>
 
 <Seo name="Starter Kit" description="An opinionated SvelteKit starter kit" image={og} locale="en_GB" />
-
 <Loader />
-
 {@render children?.()}
-<!-- 
-{#if browser && !$prefs?.cookie}
-	<Cookie />
-{/if} -->
+<Cookie />
