@@ -1,7 +1,9 @@
 <script lang="ts">
-	import favicon from '$library/assets/favicon.svg'
 	import '../app.css'
+	import favicon from '$library/assets/favicon.svg'
+	import og from '$library/assets/og.png'
 	import Loader from '$components/loader.svelte'
+	import Seo from '$components/seo.svelte'
 	// import { Overlay } from 'kitto/svelte'
 	// import Cookie from '$components/cookie.svelte'
 	// import { prefs } from '$library/stores'
@@ -11,12 +13,12 @@
 </script>
 
 <svelte:head>
-	<title>Starter Kit</title>
-	<meta name="description" content="An opinionated SvelteKit starter kit" />
 	<meta name="version" content={import.meta.env.version} />
 	<meta name="build" content={import.meta.env.build} />
 	<link rel="icon" href={favicon} />
 </svelte:head>
+
+<Seo name="Starter Kit" description="An opinionated SvelteKit starter kit" image={og} locale="en_GB" />
 
 <Loader />
 

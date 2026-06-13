@@ -17,7 +17,14 @@ declare global {
 			env?: string
 		}
 		// interface Locals {}
-		// interface PageData {}
+		interface PageData {
+			seo?: {
+				title?: string
+				description?: string
+				image?: string
+				type?: 'website' | 'article'
+			}
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}
