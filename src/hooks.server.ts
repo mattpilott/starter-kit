@@ -1,12 +1,12 @@
-import { ENVIRONMENT } from '$env/static/private'
-
 export function handleError({ error }) {
+	const env = import.meta.env.environment
 	const err = error instanceof Error ? error : new Error('Unknown error')
 
 	return {
-		message: ENVIRONMENT !== 'production' ? err.message : 'Whoa there!',
+		// Production hides details; development and preview surface the real message for debugging.
+		message: env === 'production' ? 'Whoa there!' : err.message,
 		code: 'code' in err && typeof err.code === 'string' ? err.code : 'UNKNOWN',
-		env: ENVIRONMENT
+		env
 	}
 }
 

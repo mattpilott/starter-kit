@@ -8,13 +8,14 @@ declare global {
 	interface ImportMetaEnv {
 		readonly version: string
 		readonly build: string
+		readonly environment: 'development' | 'preview' | 'production'
 	}
 
 	namespace App {
 		interface Error {
 			message: string
 			code: string
-			env?: string
+			env?: 'development' | 'preview' | 'production'
 		}
 		// interface Locals {}
 		interface PageData {

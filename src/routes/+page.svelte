@@ -136,26 +136,9 @@ response.headers.set('X-Frame-Options', 'SAMEORIGIN')`
 		{
 			title: 'handleError',
 			badge: 'hooks.server.ts',
-			desc: 'In production, users see a short generic message so stack traces are not exposed. In development you still get the real `error.message` for debugging.',
-			example: `// Production: "Whoa there!"
-// Development: actual error.message`
-		},
-		{
-			title: 'ENVIRONMENT',
-			badge: '.env',
-			desc: 'Server-only env var used in `hooks.server.ts` to control how much error detail is exposed to users. Set it to `production` in real deployments to avoid leaking stack traces and internal messages.',
-			examples: [
-				{
-					label: 'local dev',
-					explain: 'During development, keep it non-production so you see real error messages.',
-					code: `ENVIRONMENT=development`
-				},
-				{
-					label: 'production',
-					explain: 'In production, set it to `production` so `handleError` returns a generic message.',
-					code: `ENVIRONMENT=production`
-				}
-			]
+			desc: 'Errors are shaped centrally: production shows a short generic message (no stack traces); dev and preview surface the real `error.message`. The env comes from `import.meta.env.environment`—detected at build time from the deploying host (Vercel, Netlify, Cloudflare Pages & Workers) and baked in, so it works server- and client-side with no env var or `.env`.',
+			example: `// 'development' | 'preview' | 'production'
+message: import.meta.env.environment === 'production' ? 'Whoa there!' : err.message`
 		},
 		{
 			title: 'HTTPS in dev (optional)',
@@ -167,10 +150,11 @@ bun dev   # https://localhost:5173 when certs are present`
 		{
 			title: 'Version and build metadata',
 			badge: 'vite.config.ts · +layout.svelte',
-			desc: '`import.meta.env` exposes package name, version, and a build timestamp; the layout also mirrors version/build in `<meta>` tags for quick checks in the DOM. The timestamp below is rendered live with `format_date` from kitto—it shows when you opened this page.',
-			example: `import.meta.env.name    // starter-kit
-import.meta.env.version // 2.0.0
-import.meta.env.build   // ${opened}`
+			desc: '`import.meta.env` exposes package name, version, a build timestamp, and the deploy environment (development / preview / production, auto-detected on Vercel & Cloudflare); the layout also mirrors version/build in `<meta>` tags for quick checks in the DOM. The timestamp below is rendered live with `format_date` from kitto—it shows when you opened this page.',
+			example: `import.meta.env.name        // starter-kit
+import.meta.env.version     // 2.0.0
+import.meta.env.build       // ${opened}
+import.meta.env.environment // development`
 		},
 		{
 			title: 'Path aliases',

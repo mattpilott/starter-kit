@@ -22,7 +22,25 @@ logger.warn = (msg, options) => {
 
 if (!has_https_files) logger.warn('[vite] HTTPS cert/key not found; starting dev server without https.')
 
-export default defineConfig({
+// Build-time environment, baked into the bundle (like name/version/build below). `vite dev` →
+// development; otherwise read whichever host's native build signal is present. These vars only
+// exist at build time, which is exactly why we bake the result rather than read it at runtime.
+function detect_environment(command: string) {
+	if (command === 'serve') return 'development'
+	const e = process.env
+	// Optional explicit override for any host (set APP_ENV=preview|production in the build env).
+	if (e.APP_ENV === 'preview' || e.APP_ENV === 'production') return e.APP_ENV
+	// Vercel — production | preview | development.
+	if (e.VERCEL_ENV) return e.VERCEL_ENV === 'production' ? 'production' : 'preview'
+	// Netlify — production | deploy-preview | branch-deploy.
+	if (e.CONTEXT) return e.CONTEXT === 'production' ? 'production' : 'preview'
+	// Cloudflare Pages + Workers (Workers Builds) — only a branch name; production = main.
+	const branch = e.CF_PAGES_BRANCH ?? e.WORKERS_CI_BRANCH
+	if (branch) return branch === 'main' ? 'production' : 'preview'
+	return 'production'
+}
+
+export default defineConfig(({ command }) => ({
 	build: { cssMinify: 'lightningcss' },
 	css: {
 		transformer: 'lightningcss',
@@ -44,7 +62,8 @@ export default defineConfig({
 	define: {
 		'import.meta.env.name': JSON.stringify(name),
 		'import.meta.env.version': JSON.stringify(version),
-		'import.meta.env.build': JSON.stringify(format_date('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}'))
+		'import.meta.env.build': JSON.stringify(format_date('{DD}-{MM}-{YYYY}@{HH}:{mm}:{ss}')),
+		'import.meta.env.environment': JSON.stringify(detect_environment(command))
 	},
 	plugins: [
 		sveltekit({
@@ -71,4 +90,4 @@ export default defineConfig({
 			: undefined
 	},
 	customLogger: logger
-})
+}))
