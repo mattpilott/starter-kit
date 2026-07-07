@@ -10,8 +10,10 @@
 
 	let initialised = false
 
-	function gtag(...args: Array<unknown>) {
-		window.dataLayer.push(args)
+	// eslint-disable-next-line prefer-rest-params -- gtag.js only processes native `arguments`
+	// entries in dataLayer; a spread array is silently ignored and no hits are sent.
+	function gtag(..._: Array<unknown>) {
+		window.dataLayer.push(arguments)
 	}
 
 	function consent(state: 'granted' | 'denied') {
