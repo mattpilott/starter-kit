@@ -4,8 +4,8 @@
 	import og from '$library/assets/og.png'
 	import Loader from '$components/loader.svelte'
 	import Seo from '$components/seo.svelte'
-	import Cookies from '$components/cookies.svelte'
-	import Analytics from '$components/analytics.svelte'
+	// import Cookies from '$components/cookies.svelte'
+	// import Analytics from '$components/analytics.svelte'
 	// import { Overlay } from 'kitto/svelte'
 
 	let { children } = $props()
@@ -22,5 +22,5 @@
 
 {@render children?.()}
 
-<Cookies />
-<Analytics id="G-XXXXXXXXXX" />
+<!-- <Cookies /> -->
+<!-- <Analytics id="G-XXXXXXXXXX" /> -->

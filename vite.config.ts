@@ -54,7 +54,6 @@ export default defineConfig(({ command }) => ({
 					desktop: 1440
 				}),
 				fluid({ vmax: 1600 }),
-				// @ts-expect-error - Known issue with LightningCSS
 				size
 			])
 		}

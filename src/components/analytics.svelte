@@ -10,8 +10,8 @@
 
 	let initialised = false
 
-	// eslint-disable-next-line prefer-rest-params -- gtag.js only processes native `arguments`
-	// entries in dataLayer; a spread array is silently ignored and no hits are sent.
+	// gtag.js only processes native `arguments` entries in dataLayer; a spread array is
+	// silently ignored and no hits are sent.
 	function gtag(..._: Array<unknown>) {
 		window.dataLayer.push(arguments)
 	}

@@ -8,6 +8,7 @@ declare global {
 	interface ImportMetaEnv {
 		readonly version: string
 		readonly build: string
+		readonly name: string
 		readonly environment: 'development' | 'preview' | 'production'
 	}
 
