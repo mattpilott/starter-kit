@@ -295,7 +295,7 @@ export const prefs = storable&lt;{ cookies?: boolean }&gt;({}, 'prefs')`
 		--code-bg: light-dark(#fafafa, #000000); /* background-200 */
 		--accent: light-dark(#006bff, #006efe); /* blue-700 */
 		--focus: light-dark(#006bff, #47a8ff); /* blue-700 / blue-900 */
-		--svelte: #ff3e00; /* Svelte brand orange */
+		--svelte: light-dark(#d43008, #f96743); /* Svelte orange */
 		--sans: 'Geist', system-ui, sans-serif;
 		--mono: 'Geist Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
 		--ease: cubic-bezier(0.175, 0.885, 0.32, 1.1);
@@ -310,7 +310,6 @@ export const prefs = storable&lt;{ cookies?: boolean }&gt;({}, 'prefs')`
 		.page {
 			--accent: light-dark(oklch(57.61% 0.2508 258.23), oklch(57.61% 0.2321 258.23));
 			--focus: light-dark(oklch(57.61% 0.2508 258.23), oklch(71.7% 0.1648 250.79));
-			--svelte: oklch(62.8% 0.2577 29.23);
 		}
 	}
 
@@ -516,7 +515,7 @@ export const prefs = storable&lt;{ cookies?: boolean }&gt;({}, 'prefs')`
 	}
 
 	.footer {
-		--glow: light-dark(rgb(255 62 0 / 0.12), rgb(255 62 0 / 0.2));
+		--glow: light-dark(rgb(212 48 8 / 0.12), rgb(249 103 67 / 0.2));
 
 		background: radial-gradient(70% 120% at 50% 115%, var(--glow), transparent 70%);
 		border-top: 1px solid var(--border);

@@ -53,6 +53,7 @@ export default defineConfig(({ command }) => ({
 			},
 			adapter: adapter(),
 			alias: {
+				$assets: './src/assets',
 				$components: './src/components',
 				$library: './src/library'
 			}
