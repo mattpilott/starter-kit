@@ -104,19 +104,4 @@ mkcert -install
 mkcert localhost
 ```
 
-Drop the generated `localhost.pem` and `localhost-key.pem` next to `vite.config.ts`. The dev server detects them (`has_https_files`) and serves HTTPS automatically—no config edit needed. Without the certs it logs a warning and runs over HTTP.
-
-```ts
-// vite.config.ts — already wired up
-const has_https_files = existsSync(key_url) && existsSync(cert_url)
-
-server: {
-	proxy: {},
-	https: has_https_files
-		? {
-				key: readFileSync(key_url, 'utf8'),
-				cert: readFileSync(cert_url, 'utf8')
-			}
-		: undefined
-},
-```
+Drop the generated pems next to `vite.config.ts` and the `kitto()` plugin serves HTTPS automatically — any mkcert filenames work (`localhost.pem`, `myapp.test.pem`, …), no config needed. Without certs it logs a warning and runs over HTTP.

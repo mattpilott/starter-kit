@@ -79,10 +79,10 @@
 				{
 					label: 'breakpoints()',
 					explain:
-						'Use `--from-*` for min-width and `--until-*` for max-width. Pair them to target a range without repeating pixel values in every file.',
+						'Use `--from-*` for min-width, `--until-*` for max-width and `--only-*` for the range up to the next breakpoint — no pixel values repeated in every file.',
 					code: `&lt;style lang="css"&gt;
   @media (--from-mobile) { .sidebar { display: block; } }
-  @media (--from-mobile) and (--until-tablet) {
+  @media (--only-mobile) {
     .hero { padding: 2rem; }  /* 640px – 1023px */
   }
 &lt;/style&gt;`

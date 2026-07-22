@@ -23,7 +23,7 @@
 		"eslint-config-prettier": "10.1.8",
 		"eslint-plugin-svelte": "3.22.0",
 		"globals": "17.7.0",
-		"kitto": "1.7.0",
+		"kitto": "1.8.0",
 		"oxfmt": "0.60.0",
 		"svelte": "5.56.7",
 		"svelte-check-rs": "0.11.0",
