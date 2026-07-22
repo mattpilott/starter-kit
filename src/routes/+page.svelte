@@ -134,10 +134,10 @@ plugins: [sveltekit(), fontless()]`
 		{
 			title: 'Security headers',
 			badge: 'hooks.server.ts',
-			desc: 'Every response gets cache control, CSP (`frame-ancestors`), permissions policy, referrer policy, X-Content-Type-Options, and X-Frame-Options—reasonable defaults you can tighten per app.',
+			desc: 'Every response gets cache control, CSP (`frame-ancestors`), permissions policy, referrer policy, and X-Content-Type-Options—reasonable defaults you can tighten per app.',
 			example: `response.headers.set('Content-Security-Policy', "frame-ancestors 'self'")
 response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-response.headers.set('X-Frame-Options', 'SAMEORIGIN')`
+response.headers.set('X-Content-Type-Options', 'nosniff')`
 		},
 		{
 			title: 'handleError',
@@ -255,7 +255,7 @@ export const prefs = storable&lt;{ cookies?: boolean }&gt;({}, 'prefs')`
 
 	<section class="footer">
 		<p class="footer-links">
-			<a href="https://kit.svelte.dev/docs">SvelteKit documentation</a>
+			<a href="https://svelte.dev/docs/kit">SvelteKit documentation</a>
 			<span class="separator">·</span>
 			<a href="https://github.com/mattpilott/starter-kit">Starter kit source</a>
 		</p>

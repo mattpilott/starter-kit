@@ -39,7 +39,7 @@ To recreate the underlying SvelteKit setup use this configuration:
 
 ```sh
 # recreate this project
-bun x sv@0.12.8 create --template minimal --types ts --add eslint sveltekit-adapter="adapter:auto" mcp="ide:claude-code,cursor,gemini+setup:remote" --install bun .
+bun x sv@0.16.4 create --template minimal --types ts --add eslint sveltekit-adapter="adapter:auto" mcp="ide:claude-code,cursor,gemini+setup:remote" --install bun .
 bun add -d oxfmt
 ```
 
