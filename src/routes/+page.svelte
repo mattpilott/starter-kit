@@ -25,7 +25,7 @@
 			.replace(/@(media|import)/g, m => `<span class=hl-k>${m}</span>`)
 			.replace(/\b(media|import|var|if|export|return|const|let|and)\b/g, m => `<span class=hl-k>${m}</span>`)
 			.replace(
-				/\b(fluid|breakpoints|size|composeVisitors|storable|set|fontless)\b/g,
+				/\b(fluid|breakpoints|size|composeVisitors|storable|set)\b/g,
 				m => `<span class=hl-f>${m}</span>`
 			)
 			.replace(/(\.[a-zA-Z][\w-]*)(?=[\s{,])/g, m => `<span class=hl-sel>${m}</span>`)
@@ -107,29 +107,6 @@
   --f-h1: fluid(2.5rem, 5rem) / 1.2 var(--f-family);
   /* … */
 }`
-		},
-		{
-			title: 'Font optimization',
-			badge: 'vite.config.ts',
-			desc: '`fontless` is wired in as a Vite plugin. It scans your CSS for `font-family` declarations, resolves them through providers (Google, Bunny, FontShare, FontSource…), self-hosts the files, and injects optimized `@font-face` rules with metric-based fallbacks to cut layout shift (CLS). No runtime JS—just use fonts in CSS as normal.',
-			examples: [
-				{
-					label: 'vite.config.ts',
-					explain:
-						'Already registered alongside the other plugins. Optionally configure providers, weights, or specific families.',
-					code: `import { fontless } from 'fontless'
-
-plugins: [sveltekit(), fontless()]`
-				},
-				{
-					label: 'use a font',
-					explain:
-						'Reference any provider font by name; fontless detects it, downloads it, and generates the `@font-face` declarations for you.',
-					code: `&lt;style lang="css"&gt;
-  .title { font-family: "Poppins", sans-serif; }
-&lt;/style&gt;`
-				}
-			]
 		},
 		{
 			title: 'Security headers',

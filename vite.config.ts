@@ -6,7 +6,6 @@ import { composeVisitors } from 'lightningcss'
 import { format_date } from 'kitto'
 import { breakpoints, fluid, size } from 'kitto/lightningcss'
 import { deploy_env } from 'kitto/vite'
-import { fontless } from 'fontless'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
 const key_url = new URL('localhost-key.pem', import.meta.url)
@@ -57,8 +56,7 @@ export default defineConfig(({ command }) => ({
 				$components: './src/components',
 				$library: './src/library'
 			}
-		}),
-		fontless()
+		})
 	],
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
 	server: {
