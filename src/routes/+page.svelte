@@ -14,6 +14,26 @@
 	let opened = $state(import.meta.env.build)
 	onMount(() => (opened = format_date(build_format)))
 
+	// Menu: highlight the section currently crossing the upper band of the viewport.
+	const slug = (s: string) =>
+		s
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, '-')
+			.replace(/^-|-$/g, '')
+
+	let active = $state('')
+
+	onMount(() => {
+		const observer = new IntersectionObserver(
+			entries => {
+				for (const entry of entries) if (entry.isIntersecting) active = entry.target.id
+			},
+			{ rootMargin: '-15% 0px -75% 0px' }
+		)
+		for (const el of document.querySelectorAll('.item')) observer.observe(el)
+		return () => observer.disconnect()
+	})
+
 	function highlight(code: string): string {
 		return code
 			.replace(/"[^"\\]*(?:\\.[^"\\]*)*"/g, m => `<span class=hl-s>${m}</span>`)
@@ -192,111 +212,211 @@ export const prefs = storable&lt;{ cookies?: boolean }&gt;({}, 'prefs')`
 </script>
 
 <main class="page">
-	<section class="hero">
-		<h1 class="hero-title">Starter Kit</h1>
-		<p class="hero-desc">
-			This repo is a working SvelteKit app not a tutorial site. It comes with Bun-friendly scripts, TypeScript,
-			linting and formatting, LightningCSS helpers for breakpoints and fluid type, basic security headers, and a
-			few small UI pieces (loader, optional cookie banner, analytics helper) already imported or one comment
-			away. Use it as a shortcut so you are not redoing the same wiring on every new project. When you are
-			ready,
-			<span>replace or delete this page</span>
-			and ship your own home screen.
-		</p>
-	</section>
+	<div class="wrap">
+		<div class="content">
+			<section class="hero">
+				<h1 class="hero-title">Starter Kit</h1>
+				<p class="hero-desc">
+					This repo is a working SvelteKit app not a tutorial site. It comes with Bun-friendly scripts,
+					TypeScript, linting and formatting, LightningCSS helpers for breakpoints and fluid type, basic
+					security headers, and a few small UI pieces (loader, optional cookie banner, analytics helper)
+					already imported or one comment away. Use it as a shortcut so you are not redoing the same wiring on
+					every new project. When you are ready,
+					<span>replace or delete this page</span>
+					and ship your own home screen.
+				</p>
+			</section>
 
-	<section class="items">
-		{#each items as item (item)}
-			<article class="item">
-				<div class="item-header">
-					<h2 class="item-title">{item.title}</h2>
-					<div class="item-badge">{item.badge}</div>
-				</div>
-				<p class="item-desc">{item.desc}</p>
-				{#if item.examples}
-					{#each item.examples as ex (ex)}
-						<div class="item-example-block">
-							<span class="item-example-label">{ex.label}</span>
-							{#if ex.explain}
-								<p class="item-explain">{ex.explain}</p>
-							{/if}
-							<pre class="item-example"><code>{@html highlight(ex.code)}</code></pre>
+			<section class="items">
+				{#each items as item (item)}
+					<article class="item" id={slug(item.title)}>
+						<div class="item-header">
+							<h2 class="item-title">{item.title}</h2>
+							<div class="item-badge">{item.badge}</div>
 						</div>
-					{/each}
-				{:else}
-					<pre class="item-example"><code>{@html highlight(item.example)}</code></pre>
-				{/if}
-			</article>
-		{/each}
-	</section>
+						<p class="item-desc">{item.desc}</p>
+						{#if item.examples}
+							{#each item.examples as ex (ex)}
+								<div class="item-example-block">
+									<span class="item-example-label">{ex.label}</span>
+									{#if ex.explain}
+										<p class="item-explain">{ex.explain}</p>
+									{/if}
+									<pre class="item-example"><code>{@html highlight(ex.code)}</code></pre>
+								</div>
+							{/each}
+						{:else}
+							<pre class="item-example"><code>{@html highlight(item.example)}</code></pre>
+						{/if}
+					</article>
+				{/each}
+			</section>
+		</div>
 
-	<section class="footer">
+		<nav class="menu" aria-label="Sections">
+			<span class="menu-label">On This Page</span>
+			{#each items as item (item.title)}
+				<a
+					class="menu-link"
+					class:active={active === slug(item.title)}
+					aria-current={active === slug(item.title) ? 'true' : undefined}
+					href="#{slug(item.title)}">
+					{item.title}
+				</a>
+			{/each}
+		</nav>
+	</div>
+
+	<footer class="footer">
 		<p class="footer-links">
 			<a href="https://svelte.dev/docs/kit">SvelteKit documentation</a>
 			<span class="separator">·</span>
 			<a href="https://github.com/mattpilott/starter-kit">Starter kit source</a>
 		</p>
-	</section>
+	</footer>
 </main>
 
 <style lang="css">
+	:global(:root) {
+		color-scheme: light dark;
+	}
+
 	:global(html, body) {
-		background: hsl(230 50% 4%);
+		background: light-dark(#ffffff, #000000);
 	}
 
+	/* Milieu tokens — light-dark(light value, dark value), sourced from ~/.milieu/design(.dark).md */
 	.page {
-		--page-bg: hsl(230 50% 4%);
-		--page-surface: hsl(230 30% 8%);
-		--page-text: hsl(230 15% 95%);
-		--page-muted: hsl(230 15% 65%);
-		--page-accent: hsl(13 83% 54%);
-		--page-border: hsl(230 20% 18%);
-	}
+		--bg: light-dark(#ffffff, #000000); /* background-100 */
+		--text-1: light-dark(#171717, #ededed); /* gray-1000 */
+		--text-2: light-dark(#4d4d4d, #a0a0a0); /* gray-900 */
+		--border: light-dark(#00000014, #ffffff24); /* gray-alpha-400 */
+		--fill: light-dark(#0000000d, #ffffff12); /* gray-alpha-100 */
+		--code-bg: light-dark(#fafafa, #000000); /* background-200 */
+		--accent: light-dark(#006bff, #006efe); /* blue-700 */
+		--focus: light-dark(#006bff, #47a8ff); /* blue-700 / blue-900 */
+		--svelte: #ff3e00; /* Svelte brand orange */
+		--sans: 'Geist', system-ui, sans-serif;
+		--mono: 'Geist Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+		--ease: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 
-	.page {
+		background: var(--bg);
+		color: var(--text-1);
+		font-family: var(--sans);
 		min-height: 100vh;
-		background: var(--page-bg);
-		color: var(--page-text);
+	}
+
+	@media (color-gamut: p3) {
+		.page {
+			--accent: light-dark(oklch(57.61% 0.2508 258.23), oklch(57.61% 0.2321 258.23));
+			--focus: light-dark(oklch(57.61% 0.2508 258.23), oklch(71.7% 0.1648 250.79));
+			--svelte: oklch(62.8% 0.2577 29.23);
+		}
+	}
+
+	.page a:focus-visible {
+		outline: none;
+		box-shadow:
+			0 0 0 2px var(--bg),
+			0 0 0 4px var(--focus);
+	}
+
+	.wrap {
+		margin: 0 auto;
+		max-width: 75rem; /* 1200px column */
+		width: 90vw;
+	}
+
+	.menu {
+		display: none;
+	}
+
+	.content {
+		margin: 0 auto;
+		max-width: 48rem;
+	}
+
+	@media (--from-tablet) {
+		.wrap {
+			column-gap: 64px;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 14rem;
+		}
+
+		.menu {
+			align-self: start;
+			display: flex;
+			flex-direction: column;
+			gap: 2px;
+			margin-top: clamp(48px, 8vw, 96px);
+			max-height: calc(100vh - 64px);
+			overflow-y: auto;
+			position: sticky;
+			top: 32px;
+		}
+
+		.content {
+			margin: 0;
+		}
+	}
+
+	.menu-label {
+		font: 600 0.875rem/1.4 var(--sans); /* heading-14 */
+		letter-spacing: -0.02em;
+		margin-bottom: 8px;
+		padding-left: 10px;
+	}
+
+	.menu-link {
+		border-radius: 6px;
+		color: var(--text-2);
+		font: 400 0.875rem/1.4 var(--sans); /* label-14 */
+		padding: 6px 10px;
+		transition:
+			background 150ms var(--ease),
+			color 150ms var(--ease);
+	}
+
+	.menu-link:hover {
+		color: var(--text-1);
+	}
+
+	.menu-link.active {
+		background: var(--fill);
+		color: var(--text-1);
 	}
 
 	.hero {
-		margin: 0 auto;
-		max-width: 52rem;
-		width: 90vw;
-		padding: clamp(4rem, 10vw, 8rem) 0 clamp(4rem, 8vw, 6rem);
+		padding: clamp(48px, 8vw, 96px) 0 clamp(40px, 6vw, 64px);
 	}
 
 	.hero-title {
-		font: var(--f-h1);
-		font-weight: 600;
-		margin: 0 0 1rem;
-		letter-spacing: -0.02em;
+		font: 600 fluid(3rem, 4.5rem) / 1.05 var(--sans);
+		letter-spacing: -0.06em; /* heading-48…72 tracking */
+		margin: 0 0 16px;
 	}
 
 	.hero-desc {
-		font: var(--f-body);
-		color: var(--page-muted);
-		max-width: 62ch;
+		color: var(--text-2);
+		font: 400 fluid(1.125rem, 1.25rem) / 1.55 var(--sans); /* copy-18…20 */
 		margin: 0;
-		line-height: 1.6;
+		max-width: 60ch;
 
 		span {
-			color: var(--page-text);
+			color: var(--text-1);
 			text-decoration: underline;
+			text-underline-offset: 0.2em;
 		}
 	}
 
 	.items {
-		margin: 0 auto;
-		max-width: 52rem;
-		width: 90vw;
-		padding: clamp(2rem, 5vw, 3rem) 0 clamp(4rem, 8vw, 6rem);
-		border-top: 0.5px solid var(--page-border);
+		border-top: 1px solid var(--border);
 	}
 
 	.item {
-		padding: 2rem 0;
-		border-bottom: 0.5px solid var(--page-border);
+		border-bottom: 1px solid var(--border);
+		padding: 32px 0;
+		scroll-margin-top: 32px;
 	}
 
 	.item:last-of-type {
@@ -304,38 +424,36 @@ export const prefs = storable&lt;{ cookies?: boolean }&gt;({}, 'prefs')`
 	}
 
 	.item-header {
-		display: flex;
 		align-items: center;
-		gap: 0.75rem 1rem;
-		margin-bottom: 0.5rem;
-	}
-
-	.item-badge {
-		font: var(--f-label);
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: var(--page-accent);
-		background: hsl(13 83% 54% / 0.12);
-		padding: 0.2rem 0.5rem;
-		border-radius: var(--r-x);
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 12px;
+		margin-bottom: 8px;
 	}
 
 	.item-title {
-		font: var(--f-h4);
-		font-weight: 600;
+		font: 600 1.5rem/1.35 var(--sans); /* heading-24 */
+		letter-spacing: -0.04em;
 		margin: 0;
-		letter-spacing: -0.01em;
+	}
+
+	.item-badge {
+		background: var(--fill);
+		border-radius: 9999px;
+		color: var(--text-2);
+		font: 400 0.8125rem/1 var(--mono); /* label-13-mono */
+		padding: 6px 12px;
 	}
 
 	.item-desc {
-		font: var(--f-body);
-		color: var(--page-muted);
-		margin: 0 0 1rem;
-		line-height: 1.5;
+		color: var(--text-2);
+		font: 400 1rem/1.5 var(--sans); /* copy-16 */
+		margin: 0 0 16px;
+		max-width: 68ch;
 	}
 
 	.item-example-block {
-		margin-bottom: 1rem;
+		margin-bottom: 16px;
 	}
 
 	.item-example-block:last-child {
@@ -344,91 +462,95 @@ export const prefs = storable&lt;{ cookies?: boolean }&gt;({}, 'prefs')`
 
 	.item-example-label {
 		display: block;
-		font: var(--f-label);
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: white;
-		margin-bottom: 0.35rem;
+		font: 400 0.875rem/1.45 var(--mono); /* label-14-mono */
+		margin-bottom: 4px;
 	}
 
 	.item-explain {
-		font: var(--f-excerpt);
-		color: var(--page-muted);
-		margin: 0 0 0.5rem;
-		line-height: 1.5;
+		color: var(--text-2);
+		font: 400 0.875rem/1.45 var(--sans); /* copy-14 */
+		margin: 0 0 8px;
+		max-width: 68ch;
 	}
 
 	.item-example {
-		background: var(--page-surface);
-		border: 0.5px solid var(--page-border);
-		border-radius: var(--r-6);
-		font:
-			0.8125rem / 1.5 ui-monospace,
-			'Cascadia Code',
-			'Fira Code',
-			monospace;
-		margin: 0 0 2rem;
+		background: var(--code-bg);
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		font: 400 0.875rem/1.55 var(--mono); /* copy-14-mono */
+		margin: 0;
 		overflow-x: auto;
-		padding: 1rem 1.25rem;
+		padding: 16px 20px;
 	}
 
 	.item-example code {
-		color: var(--page-muted);
+		color: var(--text-1);
 		white-space: pre;
 	}
 
+	/* Syntax colors from the Milieu accent scales, step 900 (secondary text) */
 	.item-example :global(.hl-c) {
-		color: hsl(230 15% 50%);
+		color: light-dark(#7d7d7d, #8f8f8f); /* gray-800 / gray-700 */
 		font-style: italic;
 	}
 	.item-example :global(.hl-s) {
-		color: hsl(85 45% 55%);
+		color: light-dark(#107d32, #00ca50); /* green-900 */
 	}
 	.item-example :global(.hl-t) {
-		color: rgb(249, 103, 67);
+		color: light-dark(#7d00cc, #c472fb); /* purple-900 */
 	}
 	.item-example :global(.hl-k) {
-		color: rgb(249, 103, 67);
+		color: light-dark(#7d00cc, #c472fb); /* purple-900 */
 	}
 	.item-example :global(.hl-f) {
-		color: hsl(200 70% 65%);
+		color: light-dark(#005ff2, #47a8ff); /* blue-900 */
 	}
 	.item-example :global(.hl-v) {
-		color: hsl(45 70% 60%);
+		color: light-dark(#aa4d00, #ff9300); /* amber-900 */
 	}
 	.item-example :global(.hl-sel) {
-		color: hsl(30 80% 65%);
+		color: light-dark(#c41562, #ff4d8d); /* pink-900 */
 	}
 	.item-example :global(.hl-n) {
-		color: hsl(180 60% 55%);
+		color: light-dark(#007f70, #00cfb7); /* teal-900 */
 	}
 
 	.footer {
-		margin: 0 auto;
-		max-width: 52rem;
-		width: 90vw;
-		padding: clamp(2rem, 4vw, 3rem) 0;
-		border-top: 0.5px solid var(--page-border);
+		--glow: light-dark(rgb(255 62 0 / 0.12), rgb(255 62 0 / 0.2));
+
+		background: radial-gradient(70% 120% at 50% 115%, var(--glow), transparent 70%);
+		border-top: 1px solid var(--border);
+		margin-top: 96px;
+		padding: clamp(96px, 14vw, 176px) 0 clamp(64px, 10vw, 128px);
+		text-align: center;
 	}
 
 	.footer-links {
-		font: var(--f-excerpt);
-		color: var(--page-muted);
+		color: var(--text-2);
+		font: 400 1rem/1.5 var(--sans); /* label-16 */
 		margin: 0;
 	}
 
 	.footer-links a {
-		color: var(--page-text);
+		color: var(--svelte);
 		text-decoration: underline;
 		text-underline-offset: 0.2em;
+		transition: color 150ms var(--ease);
 	}
 
 	.footer-links a:hover {
-		color: var(--page-accent);
+		color: var(--text-1);
 	}
 
 	.separator {
-		margin: 0 0.5rem;
+		margin: 0 8px;
 		opacity: 0.5;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.menu-link,
+		.footer-links a {
+			transition: none;
+		}
 	}
 </style>
