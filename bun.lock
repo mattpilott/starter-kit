@@ -15,7 +15,7 @@
         "eslint-plugin-svelte": "3.22.0",
         "fontless": "0.2.1",
         "globals": "17.7.0",
-        "kitto": "1.6.0",
+        "kitto": "1.7.0",
         "oxfmt": "0.60.0",
         "svelte": "5.56.7",
         "svelte-check-rs": "0.11.0",
@@ -362,7 +362,7 @@
 
     "flat-cache": ["flat-cache@4.0.1", "", { "dependencies": { "flatted": "^3.2.9", "keyv": "^4.5.4" } }, "sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw=="],
 
-    "flatted": ["flatted@3.4.2", "", {}, "sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA=="],
+    "flatted": ["flatted@3.4.3", "", {}, "sha512-/zipXxyO6rGvuNGDiULY9MvEGSkb2gaG4GGH4ygMi0ZZzyMHdUZBmntJmx5x1G2VuPytCwGN4xsJP6cw+sK+vQ=="],
 
     "fontaine": ["fontaine@0.8.0", "", { "dependencies": { "@capsizecss/unpack": "^4.0.0", "css-tree": "^3.1.0", "magic-regexp": "^0.10.0", "magic-string": "^0.30.21", "pathe": "^2.0.3", "ufo": "^1.6.1", "unplugin": "^2.3.10" } }, "sha512-eek1GbzOdWIj9FyQH/emqW1aEdfC3lYRCHepzwlFCm5T77fBSRSyNRKE6/antF1/B1M+SfJXVRQTY9GAr7lnDg=="],
 
@@ -402,7 +402,7 @@
 
     "keyv": ["keyv@4.5.4", "", { "dependencies": { "json-buffer": "3.0.1" } }, "sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw=="],
 
-    "kitto": ["kitto@1.6.0", "", { "peerDependencies": { "lightningcss": "^1", "svelte": "^5.56.5" } }, "sha512-4wWwUP0Puc8EHXFFRvFERbA8jM6patooTIllRhfPmnhiUB84yDsv0WtPDplJ24p+MWh+/mRQu31kRf/9ZtPuEQ=="],
+    "kitto": ["kitto@1.7.0", "", { "peerDependencies": { "lightningcss": "^1.33.0", "svelte": "^5.56.7" } }, "sha512-9SEQutE0T9PzSGt16IzmK8qRFo7BNffuAAU0O9tzBWXHLrLwN1OvWmoobB5a97Gxt9aCS33VFtp6UsSqKbNIUg=="],
 
     "kleur": ["kleur@4.1.5", "", {}, "sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ=="],
 

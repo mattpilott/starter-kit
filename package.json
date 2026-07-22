@@ -24,7 +24,7 @@
 		"eslint-plugin-svelte": "3.22.0",
 		"fontless": "0.2.1",
 		"globals": "17.7.0",
-		"kitto": "1.6.0",
+		"kitto": "1.7.0",
 		"oxfmt": "0.60.0",
 		"svelte": "5.56.7",
 		"svelte-check-rs": "0.11.0",

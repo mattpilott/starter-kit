@@ -30,3 +30,4 @@ bun.lockb
 
 # SSL
 *.pem
+.claude/settings.json
