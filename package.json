@@ -16,20 +16,20 @@
 	"devDependencies": {
 		"@eslint/js": "10.0.1",
 		"@sveltejs/adapter-auto": "7.0.1",
-		"@sveltejs/kit": "2.69.3",
+		"@sveltejs/kit": "2.70.1",
 		"@sveltejs/vite-plugin-svelte": "7.2.0",
 		"@types/node": "26.1.1",
 		"eslint": "10.7.0",
 		"eslint-config-prettier": "10.1.8",
-		"eslint-plugin-svelte": "3.20.0",
+		"eslint-plugin-svelte": "3.22.0",
 		"fontless": "0.2.1",
 		"globals": "17.7.0",
-		"kitto": "1.5.2",
-		"oxfmt": "0.58.0",
-		"svelte": "5.56.4",
-		"svelte-check-rs": "0.10.2",
+		"kitto": "1.6.0",
+		"oxfmt": "0.60.0",
+		"svelte": "5.56.7",
+		"svelte-check-rs": "0.11.0",
 		"typescript": "5.9.3",
-		"typescript-eslint": "8.64.0",
-		"vite": "8.1.4"
+		"typescript-eslint": "8.65.0",
+		"vite": "8.1.5"
 	}
 }

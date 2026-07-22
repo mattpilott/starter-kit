@@ -1,0 +1,15 @@
+{
+	"permissions": {
+		"allow": [
+			"WebSearch",
+			"WebFetch(domain:github.com)",
+			"Bash(git -C /Users/Matt/Sites/starter-kit ls-files)",
+			"Bash(bun outdated *)",
+			"mcp__svelte__list-sections",
+			"mcp__svelte__get-documentation",
+			"mcp__svelte__svelte-autofixer",
+			"Bash(npm view *)",
+			"Bash(bun run *)"
+		]
+	}
+}
